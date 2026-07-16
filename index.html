@@ -1,0 +1,1466 @@
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>国都开户系统升级方案</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+    --text: #1f2937;
+    --text-secondary: #4b5563;
+    --border: #e5e7eb;
+    --bg: #f9fafb;
+    --card-bg: #ffffff;
+    --accent: #f59e0b;
+    --success: #10b981;
+    --danger: #ef4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "SimHei", sans-serif;
+    color: var(--text);
+    background: #f0f2f5;
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── 报告封面 ── */
+  .report-cover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #1e3a8a 100%);
+    color: #fff;
+    text-align: center;
+    padding: 64px 48px 52px;
+    border-radius: 16px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .report-cover::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.06) 0%, transparent 50%);
+  }
+  .report-cover .cover-org {
+    font-size: 14px;
+    opacity: 0.8;
+    letter-spacing: 4px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .report-cover h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    line-height: 1.4;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .report-cover .cover-line {
+    width: 48px;
+    height: 2px;
+    background: rgba(255,255,255,0.5);
+    margin: 0 auto 20px;
+    position: relative;
+  }
+  .report-cover .cover-meta {
+    font-size: 14px;
+    opacity: 0.85;
+    line-height: 2.2;
+    position: relative;
+  }
+  .report-cover .cover-dept {
+    display: inline-block;
+    font-size: 13px;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(4px);
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-top: 16px;
+    letter-spacing: 1px;
+    position: relative;
+  }
+
+  /* ── 目录 ── */
+  .toc {
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 32px 36px;
+    margin-bottom: 40px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .toc h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 18px;
+    letter-spacing: 2px;
+  }
+  .toc-item {
+    display: flex;
+    padding: 5px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .toc-item.main {
+    font-weight: 700;
+    color: var(--text);
+    font-size: 15px;
+    margin-top: 4px;
+  }
+  .toc-item .toc-num {
+    min-width: 40px;
+    flex-shrink: 0;
+    color: var(--primary);
+  }
+  .toc-item .toc-title {
+    flex: 1;
+  }
+
+  /* ── Section ── */
+  .section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 36px 36px 28px;
+    margin-bottom: 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--primary-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .num {
+    background: var(--primary);
+    color: #fff;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+  }
+
+  /* ── Subsection ── */
+  .subsection {
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: var(--bg);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .subsection-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    padding-left: 14px;
+    border-left: 3px solid var(--primary);
+  }
+  .subsection-title .time-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* ── Phase group ── */
+  .phase-group {
+    margin-top: 20px;
+  }
+  .phase-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 24px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .phase-title .count {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-left: 4px;
+  }
+
+  /* ── 里程碑卡片 ── */
+  .ms-grid > .ms-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border-left: 4px solid var(--primary);
+    transition: box-shadow 0.2s;
+  }
+  .ms-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .ms-card .ms-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ms-card .ms-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .ms-card .ms-status {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+  }
+  .status-pending { background: #fef3c7; color: #92400e; }
+  .status-progress { background: #dbeafe; color: #1e40af; }
+  .status-done { background: #d1fae5; color: #065f46; }
+  .ms-card .ms-detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    list-style: none;
+    padding: 0;
+    margin-top: 4px;
+  }
+  .ms-card .ms-detail li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 2px;
+  }
+  .ms-card .ms-detail li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .ms-card .ms-output {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed var(--border);
+  }
+  .ms-card .ms-output strong { color: var(--primary); }
+
+  /* ── Field ── */
+  .field {
+    display: flex;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .field-label {
+    font-weight: 600;
+    color: var(--text);
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+  .field-label::after { content: '：'; }
+  .field-value { color: var(--text-secondary); flex: 1; }
+
+  /* ── List ── */
+  .info-list {
+    list-style: none;
+    padding: 0;
+    margin: 6px 0 6px 4px;
+  }
+  .info-list li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+  .info-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: 0.5;
+  }
+
+  /* ── 甘特图 ── */
+  .gantt-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .gantt-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    min-width: 960px;
+  }
+  .gantt-table th, .gantt-table td {
+    border: 1px solid #e5e7eb;
+    padding: 7px 5px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  /* 表头 */
+  .gantt-table thead th {
+    background: linear-gradient(180deg, #1e40af 0%, #2563eb 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 9px 5px;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .gantt-table thead th:first-child {
+    border-radius: 0;
+  }
+  .gantt-table .th-name { text-align: left; min-width: 180px; }
+  .gantt-table .th-dept { min-width: 130px; }
+
+  /* ── 项目轨道分区标题行 ── */
+  .gantt-table .section-row td {
+    font-weight: 800;
+    text-align: left;
+    padding: 11px 10px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+  }
+  /* 轨道1：现有系统改造升级 */
+  .gantt-table .track-legacy td {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: #fff;
+  }
+  /* 轨道2：同花顺开户系统建设 */
+  .gantt-table .track-main td {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #fff;
+  }
+  /* 轨道2-子阶段 */
+  .gantt-table .track-sub td {
+    background: #e8f0fe;
+    color: #1e40af;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 8px 10px;
+    border-left: 3px solid #3b82f6;
+  }
+  /* 轨道3：上线后运营 */
+  .gantt-table .track-operate td {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: #fff;
+  }
+  /* 轨道4：增值提佣（并行） */
+  .gantt-table .track-parallel td {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    color: #fff;
+  }
+
+  /* ── 条形图通用 ── */
+  .gantt-table .bar {
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    display: inline-block;
+    letter-spacing: 0.3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  /* 蓝色系 - 开户系统主体 */
+  .gantt-table .bar-blue {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    color: #1e40af;
+    border: 1px solid #93c5fd;
+  }
+  /* 绿色系 - 进行中 */
+  .gantt-table .bar-green {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+  }
+  /* 琥珀色系 - 待排期 / 并行项目 */
+  .gantt-table .bar-amber {
+    background: linear-gradient(135deg, #fde68a, #fcd34d);
+    color: #92400e;
+    border: 1px solid #fbbf24;
+  }
+  /* 紫色系 - 现有系统 */
+  .gantt-table .bar-purple {
+    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+    color: #3730a3;
+    border: 1px solid #a5b4fc;
+  }
+  /* 橙色系 - 增值提佣并行 */
+  .gantt-table .bar-orange {
+    background: linear-gradient(135deg, #fed7aa, #fdba74);
+    color: #9a3412;
+    border: 1px solid #fb923c;
+  }
+  /* 灰色 - 待排期 */
+  .gantt-table .bar-pending {
+    background: #f3f4f6;
+    color: #6b7280;
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    border: 1px dashed #d1d5db;
+  }
+  /* 进行中标签 */
+  .gantt-table .bar-progress {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    border: 1px solid #6ee7b7;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  /* ── 阶段分隔列 ── */
+  .gantt-table .phase-divider {
+    border-left: 2px dashed #93c5fd !important;
+  }
+  .gantt-table .phase-divider-amber {
+    border-left: 2px dashed #fbbf24 !important;
+  }
+
+  /* ── 分区时间标识 ── */
+  .gantt-table .gantt-time {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 12px;
+    border-radius: 12px;
+    margin-left: 12px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+  }
+  .gantt-table .time-legacy {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .gantt-table .time-main {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .gantt-table .time-operate {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .gantt-table .time-parallel {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  /* ── 并行标识 ── */
+  .gantt-table .parallel-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #b45309;
+    background: #fef3c7;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-right: 6px;
+    border: 1px solid #f59e0b;
+    vertical-align: middle;
+  }
+  .gantt-table .badge-main {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #1e40af;
+    background: #dbeafe;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-right: 6px;
+    border: 1px solid #93c5fd;
+    vertical-align: middle;
+  }
+  .gantt-table .badge-legacy {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #3730a3;
+    background: #e0e7ff;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-right: 6px;
+    border: 1px solid #a5b4fc;
+    vertical-align: middle;
+  }
+
+  /* 悬停行高亮 */
+  .gantt-table tbody tr:not(.section-row):hover td {
+    filter: brightness(0.97);
+    cursor: default;
+  }
+
+  /* ── KPI ── */
+  .kpi-grid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .kpi-card {
+    border-radius: 8px;
+    padding: 14px 22px;
+    text-align: center;
+    border: 1px solid;
+  }
+  .kpi-card .kpi-value { font-size: 24px; font-weight: 800; }
+  .kpi-card .kpi-label { font-size: 12px; color: #6b7280; margin-top: 2px; }
+  .kpi-green { background: #ecfdf5; border-color: var(--success); }
+  .kpi-green .kpi-value { color: var(--success); }
+  .kpi-blue { background: #eff6ff; border-color: #3b82f6; }
+  .kpi-blue .kpi-value { color: #3b82f6; }
+  .kpi-amber { background: #fef3c7; border-color: var(--accent); }
+  .kpi-amber .kpi-value { color: #d97706; }
+
+  /* ── 沟通机制 ── */
+  .comm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .comm-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: box-shadow 0.2s;
+  }
+  .comm-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .comm-card .comm-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--primary);
+  }
+  .comm-card .comm-detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  /* ── 商务洽谈卡片 ── */
+  .biz-card {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+  }
+  .biz-card p:first-child {
+    font-weight: 700;
+    font-size: 14px;
+    margin: 0 0 6px;
+    color: var(--primary);
+  }
+  .biz-card p:last-child {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+  }
+
+  /* ── 页脚 ── */
+  .footer {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 13px;
+    margin-top: 40px;
+    font-style: italic;
+  }
+
+  /* ── utility ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0 28px;
+  }
+
+  /* ── 对比图片组 ── */
+  .compare-group {
+    margin-top: 20px;
+  }
+  .compare-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .compare-title::before {
+    content: '';
+    width: 4px; height: 16px;
+    background: var(--primary);
+    border-radius: 2px;
+  }
+  .compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .compare-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .compare-card-header {
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .compare-card-header.old {
+    background: #fef3c7;
+    color: #92400e;
+  }
+  .compare-card-header.new {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+  .compare-card-header .badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.7);
+  }
+  .compare-card-img {
+    width: 100%;
+    display: block;
+    max-height: 640px;
+    object-fit: contain;
+    background: #fafafa;
+  }
+
+  /* ── HTML原型嵌入 ── */
+  .embed-group {
+    margin-top: 20px;
+  }
+  .embed-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .embed-card-header {
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #d1fae5;
+    color: #065f46;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .embed-card-header .badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.7);
+  }
+  .embed-card-body {
+    background: #F3F2F7;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .embed-iframe {
+    width: 100%;
+    max-width: 440px;
+    height: 880px;
+    border: none;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    overflow: hidden;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .container { max-width: 100%; padding: 0; }
+    .section { box-shadow: none; break-inside: avoid; }
+    .report-cover { background: #1d4ed8 !important; -webkit-print-color-adjust: exact; }
+    .ms-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 报告封面 -->
+  <div class="report-cover">
+    <h1>国都开户系统升级方案</h1>
+  </div>
+
+  <!-- 目录 -->
+  <div class="toc">
+    <h2>目　录</h2>
+    <div class="toc-item main"><span class="toc-num"></span><span class="toc-title">项目概述</span></div>
+    <div class="toc-item main"><span class="toc-num">一、</span><span class="toc-title">现有系统改造升级</span></div>
+    <div class="toc-item"><span class="toc-num"></span><span class="toc-title">1.1 手机号同花顺一键注册</span></div>
+    <div class="toc-item"><span class="toc-num"></span><span class="toc-title">1.2 营业部选项隐藏与固定展示</span></div>
+    <div class="toc-item"><span class="toc-num"></span><span class="toc-title">1.3 信息补充页面折叠层优化</span></div>
+    <div class="toc-item"><span class="toc-num"></span><span class="toc-title">1.4 开户断点企微推送</span></div>
+    <div class="toc-item"><span class="toc-num"></span><span class="toc-title">1.5 产品抓手建设</span></div>
+    <div class="toc-item main"><span class="toc-num">二、</span><span class="toc-title">同花顺开户系统建设</span></div>
+    <div class="toc-item"><span class="toc-num"></span><span class="toc-title">2.1 项目启动与需求 &nbsp;·&nbsp; 2.2 设计与开发 &nbsp;·&nbsp; 2.3 测试与修复 &nbsp;·&nbsp; 2.4 上线与总结</span></div>
+    <div class="toc-item"><span class="toc-num"></span><span class="toc-title">网厅H5功能对接（同步并行）</span></div>
+    <div class="toc-item main"><span class="toc-num">三、</span><span class="toc-title">同花顺开户系统上线后运营</span></div>
+    <div class="toc-item"><span class="toc-num"></span><span class="toc-title">3.1 数据跟踪与专项活动运营</span></div>
+    <div class="toc-item"><span class="toc-num"></span><span class="toc-title">3.2 增值提佣开发与上线</span></div>
+    <div class="toc-item main"><span class="toc-num"></span><span class="toc-title">附录：项目时间规划（甘特图）</span></div>
+    <div class="toc-item main"><span class="toc-num"></span><span class="toc-title">项目沟通机制</span></div>
+  </div>
+
+  <!-- 项目概述 -->
+  <div class="section">
+    <div class="section-title"><span class="num">概</span>项目概述</div>
+    <p class="section-desc">本项目旨在完成国都证券与同花顺平台的开户系统全面对接与升级，涵盖现有系统改造、开户系统建设及上线后运营三个阶段。项目由创新金融部牵头，协同信息技术部、财富管理部、运营管理部及杭州环城北路营业部共同推进。</p>
+
+    <p style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--primary);">项目背景与目标</p>
+    <ul class="info-list">
+      <li>当前同花顺渠道已成为证券开户的重要流量入口，为提升客户开户体验、提高转化效率，需对现有开户流程进行系统性优化升级。</li>
+      <li>完成同花顺开户系统的测试、部署与生产上线，实现全流程闭环。</li>
+      <li>上线后持续跟踪运营数据，确保转化率 ≥ 30%、成功率 ≥ 70%，年内实现流量突破 3000 户。</li>
+    </ul>
+
+    <p style="font-weight:700;font-size:15px;margin:16px 0 8px;color:var(--primary);">涉及部门与职责</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px 24px;">
+      <div class="field"><span class="field-label">创新金融部</span><span class="field-value">项目总体协调、上线后运营统筹、专项活动对接</span></div>
+      <div class="field"><span class="field-label">信息技术部</span><span class="field-value">技术评估、系统开发、测试与生产环境运维</span></div>
+      <div class="field"><span class="field-label">财富管理部</span><span class="field-value">业务流程验证、视频见证测试、业务规则确认；网厅H5功能立项与对接推进</span></div>
+      <div class="field"><span class="field-label">运营管理部</span><span class="field-value">开户全流程合规审查、风测选项及协议核验</span></div>
+      <div class="field"><span class="field-label">杭州环城北路营业部</span><span class="field-value">单/双向视频验证测试执行</span></div>
+    </div>
+  </div>
+
+  <!-- 一、现有系统改造升级 -->
+  <div class="section">
+    <div class="section-title"><span class="num">一</span>现有系统改造升级</div>
+    <p class="section-desc">本阶段目标是完成现有系统与同花顺渠道的适配改造，为后续开户系统对接奠定基础。<span style="background:var(--primary-light);color:var(--primary);padding:3px 12px;border-radius:12px;font-size:12px;margin-left:8px;">同花顺开户系统上线前</span></p>
+
+    <!-- 1.1 -->
+    <div class="subsection">
+      <div class="subsection-title">1.1 手机号同花顺一键注册</div>
+      <div class="field"><span class="field-label">功能描述</span><span class="field-value">同花顺端内实现手机号一键注册，将客户手机号经同花顺加密后传送至国都证券，国都证券侧使用密钥解密，完成免验证码快速注册。</span></div>
+      <div class="field"><span class="field-label">参与部门</span><span class="field-value">信息技术部、财富管理部、创新金融部、运营管理部</span></div>
+      <div class="field"><span class="field-label">技术要点</span><span class="field-value">加密算法协商、密钥交换机制、解密接口开发、注册流程对接</span></div>
+      <div class="field"><span class="field-label">排期</span><span class="field-value">由信息技术部技术评估后给出排期</span></div>
+      <div class="field"><span class="field-label">交付物</span><span class="field-value">同花顺端内客户开户手机号一键注册。</span></div>
+
+      <div class="compare-group">
+        <div class="compare-title">登录注册页面对比</div>
+        <div class="compare-grid">
+          <div class="compare-card">
+            <div class="compare-card-header old">
+              <span>老版本 · 手机号验证码注册</span>
+              <span class="badge">Before</span>
+            </div>
+            <img class="compare-card-img" src="老版本登录.jpg" alt="老版本登录页">
+          </div>
+          <div class="compare-card">
+            <div class="compare-card-header new">
+              <span>升级后 · 同花顺手机号一键登录</span>
+              <span class="badge">After</span>
+            </div>
+            <img class="compare-card-img" src="升级后登录.png" alt="升级后登录页">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.2 -->
+    <div class="subsection">
+      <div class="subsection-title">1.2 营业部选择隐藏与展示优化</div>
+      <div class="field"><span class="field-label">功能描述</span><span class="field-value">在同花顺渠道前端隐藏营业部主动选择选项，将该字段移至「信息补充」步骤中做仅展示处理，客户不可修改。</span></div>
+      <div class="field"><span class="field-label">参与部门</span><span class="field-value">信息技术部、财富管理部、创新金融部、运营管理部</span></div>
+      <div class="field"><span class="field-label">技术要点</span><span class="field-value">前端页面改造、字段映射、营业部默认赋值逻辑</span></div>
+      <div class="field"><span class="field-label">排期</span><span class="field-value">由信息技术部技术评估后给出排期</span></div>
+      <div class="field"><span class="field-label">交付物</span><span class="field-value">去除原本营业部选择页面，固定营业部选项在信息补充中。</span></div>
+    </div>
+
+    <!-- 1.3 -->
+    <div class="subsection">
+      <div class="subsection-title">1.3 信息补充页折叠层设计</div>
+      <div class="field"><span class="field-label">功能描述</span><span class="field-value">在信息补充步骤最下方新增折叠层，将「邮编」「工作单位」设计为选填项放入折叠层中，降低客户填写负担，提升转化率。</span></div>
+      <div class="field"><span class="field-label">参与部门</span><span class="field-value">信息技术部、财富管理部、创新金融部、运营管理部</span></div>
+      <div class="field"><span class="field-label">技术要点</span><span class="field-value">前端UI改造、折叠交互设计、字段校验逻辑调整（选填）</span></div>
+      <div class="field"><span class="field-label">排期</span><span class="field-value">由信息技术部技术评估后给出排期</span></div>
+      <div class="field"><span class="field-label">交付物</span><span class="field-value">信息补充页面整体优化</span></div>
+
+      <div class="compare-group">
+        <div class="compare-title">营业部选择页面与信息补充页面对比</div>
+        <div class="compare-grid">
+          <div class="compare-card">
+            <div class="compare-card-header old">
+              <span>老版本 · 营业部网点选择页</span>
+              <span class="badge">Before</span>
+            </div>
+            <img class="compare-card-img" src="选择营业部.png" alt="选择营业部页面">
+          </div>
+          <div class="compare-card">
+            <div class="compare-card-header old">
+              <span>老版本 · 信息补充资料填写页</span>
+              <span class="badge">Before</span>
+            </div>
+            <img class="compare-card-img" src="老版本资料填写.jpg" alt="老版本资料填写页">
+          </div>
+        </div>
+      </div>
+
+      <div class="embed-group">
+        <div class="compare-title">升级后 · 信息补充页折叠层设计原型（可交互）</div>
+        <div class="embed-card">
+          <div class="embed-card-header">
+            <span>新版本原型 · 选填信息折叠层 + 营业部信息固定展示</span>
+            <span class="badge">After · Prototype</span>
+          </div>
+          <div class="embed-card-body">
+            <iframe class="embed-iframe" src="newinfo.html" title="信息补充页原型"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.4 -->
+    <div class="subsection">
+      <div class="subsection-title">1.4 开户断点企业微信推送 <span class="time-tag">预计IT排期两个月</span></div>
+      <div class="field"><span class="field-label">功能描述</span><span class="field-value">新增系统能力：客户在同花顺渠道开户中途退出后，系统自动将断点信息推送至对应营销人员的企业微信，便于营销人员及时跟进挽回。</span></div>
+      <div class="field"><span class="field-label">参与部门</span><span class="field-value">信息技术部、创新金融部、财富管理部、运营管理部</span></div>
+      <div class="field"><span class="field-label">技术要点</span><span class="field-value">断点数据采集、企业微信消息接口对接、营销人员匹配路由、推送策略（频次/时段）</span></div>
+    </div>
+
+    <!-- 1.5 -->
+    <div class="subsection">
+      <div class="subsection-title">1.5 产品抓手建设</div>
+      <div class="field"><span class="field-label">功能描述</span><span class="field-value">联合自营、资管、财富条线设立新客理财产品专享权益，针对开户断点客户进行专项营销，引导客户完成开户后在APP端领取新客理财产品，以产品权益驱动开户转化。</span></div>
+      <div class="field"><span class="field-label">参与部门</span><span class="field-value">财富管理部、创新金融部、运营管理部、信息技术部、自营条线</span></div>
+      <div class="field"><span class="field-label">技术要点</span><span class="field-value">新客理财产品设计、产品上架与分配逻辑、APP端领取入口开发、断点客户定向营销机制</span></div>
+      <div class="field"><span class="field-label">排期</span><span class="field-value">由财富管理部与自营条线协调产品排期，信息技术部技术评估后给出上线排期</span></div>
+      <div class="field"><span class="field-label">交付物</span><span class="field-value">新客理财产品方案、APP领取功能、断点客户营销SOP</span></div>
+    </div>
+  </div>
+
+  <!-- 二、同花顺开户系统建设（参照Excel项目排期表） -->
+  <div class="section">
+    <div class="section-title"><span class="num">二</span>同花顺开户系统建设</div>
+    <p class="section-desc">按照产品研发全生命周期划分为前置商务阶段和四个子阶段。<strong>整体周期9周</strong>，由同花顺开发方与国都证券各业务部门协同推进。<br>网厅H5功能对接与开户系统建设<strong>同步并行推进</strong>，由财富管理部牵头立项，信息技术部与同花顺开发团队共同实现。</p>
+
+    <!-- 前置：单一来源采购和商务谈判 -->
+    <div class="phase-group">
+      <div class="phase-title"><span class="dot"></span>前置：单一来源采购与商务谈判（第1周）<span class="count">共 2 个里程碑</span></div>
+
+      <div class="ms-card" style="border-left-color:var(--accent);">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 1：单一来源采购审批</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>发起单一来源采购申请</li>
+          <li>采购审批流程流转</li>
+          <li>采购合同法务审核</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>信息技术部（项目经理：吕娜）、运营管理部（吴若吟）<br><strong>输出物：</strong>《单一来源采购审批单》《采购合同》</div>
+      </div>
+
+      <div class="ms-card" style="border-left-color:var(--accent);">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 2：商务谈判与签约</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>同花顺商务对接人石文杰与国都证券双方商务条款洽谈</li>
+          <li>明确接口授权范围、数据安全责任划分</li>
+          <li>技术合作框架协议签署</li>
+          <li>确认端内流量激励机制与系统长期运营维护条款</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《技术合作框架协议》《商务洽谈纪要》</div>
+      </div>
+    </div>
+
+    <!-- 阶段2.1：项目启动与需求 -->
+    <div class="phase-group">
+      <div class="phase-title"><span class="dot"></span>2.1 项目启动与需求阶段（第2–3周）<span class="count">共 4 个里程碑</span></div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 3：项目动员会</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>项目目标宣贯</li>
+          <li>实施计划确认</li>
+          <li>双方职责确认</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）、业务部门（周欣、张嘉妮）、运营管理部（吴若吟）<br><strong>输出物：</strong>《项目计划排期》《会议纪要》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 4：需求沟通</span>
+          <span class="ms-status status-progress">进行中</span>
+        </div>
+        <div class="ms-detail">
+          <li>收集业务规则</li>
+          <li>补充需求沟通</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）、业务部门（周欣、张嘉妮）、运营管理部（吴若吟）<br><strong>输出物：</strong>《补充需求清单》《业务规则清单》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 5：UI / 交互确认</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>开户流程确认</li>
+          <li>页面原型确认</li>
+          <li>交互细节确认</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）、业务部门（周欣、张嘉妮）<br><strong>输出物：</strong>《UI确认稿》《原型确认稿》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 6：需求确认</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>确认一期上线范围</li>
+          <li>确认业务流程</li>
+          <li>确认硬件资源需求</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）、业务部门（周欣、张嘉妮）<br><strong>输出物：</strong>《需求文档确认稿》《硬件清单》</div>
+      </div>
+    </div>
+
+    <!-- 阶段2.2：设计与开发 -->
+    <div class="phase-group">
+      <div class="phase-title"><span class="dot"></span>2.2 设计与开发阶段（第4–5周）<span class="count">共 4 个里程碑</span></div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 7：技术方案设计</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>方案设计</li>
+          <li>部署方案设计</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（技术负责人）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《技术方案》《接口文档》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 8：环境准备</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>服务器准备（应用服务器 ×3、音视频服务器 ×3、WEB服务器 ×2 等）</li>
+          <li>数据库准备（支持 OceanBase / TDSQL / TiDB）</li>
+          <li>信创中间件安装（麒麟 V10 / openEuler）</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>信息技术部（运维：杨炯）<br><strong>输出物：</strong>《环境部署清单》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 9：测试环境部署</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>测试环境发布</li>
+          <li>测试数据准备</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>信息技术部（运维：杨炯）<br><strong>输出物：</strong>《测试环境部署报告》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 10：功能开发</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>补充需求开发</li>
+          <li>开户流程优化开发（注册 → 身份证上传 → 完善资料 → 开立账户 → 设置密码 → 三方存管 → 风险测评 → 回访问卷 → 视频见证 → 开户提交）</li>
+          <li>后台配置开发</li>
+          <li>接口开发（柜台接口、短信服务、公安核验、视频见证、CFCA协议、呼叫中心等）</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（开发负责人）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>开户系统 V1.4 版本</div>
+      </div>
+    </div>
+
+    <!-- 阶段2.3：测试与修复 -->
+    <div class="phase-group">
+      <div class="phase-title"><span class="dot"></span>2.3 测试与修复阶段（第6–7周）<span class="count">共 6 个里程碑</span></div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 11：第三方系统联调</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>柜台接口联调（恒生柜台）</li>
+          <li>视频见证联调</li>
+          <li>短信服务联调</li>
+          <li>公安核验联调（政通 / 龙团等）</li>
+          <li>协议CFCA对接、档案对接、呼叫中心对接</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（技术负责人）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《联调报告》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 12：同花顺一轮测试</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>功能测试</li>
+          <li>流程测试</li>
+          <li>缺陷提交</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（测试负责人）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《测试报告 V1》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 13：缺陷修复（第一轮）</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>BUG修复</li>
+          <li>版本发布</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（开发负责人）<br><strong>输出物：</strong>开户系统 V1.4.1</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 14：提交国都测试</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>需求符合性检查</li>
+          <li>流程验收</li>
+          <li>配置验收</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《提测报告》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 15：券商一轮测试 & 同花顺二轮测试</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>业务验证（业务部门：周欣、张嘉妮；杭州环城北路营业部：单/双向视频见证测试）</li>
+          <li>合规审查（运营管理部：吴若吟 - 开户全流程、风测选项、协议签署）</li>
+          <li>回归测试</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>业务部门（周欣、张嘉妮）、运营管理部（吴若吟）、杭州环城北路营业部<br><strong>输出物：</strong>《回归测试报告 V2》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 16：缺陷修复（第二轮）& 券商 UAT 测试</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>高优先级问题修复 → 开户系统 V1.4.2</li>
+          <li>用户验收测试（UAT）</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（开发负责人）、业务部门（周欣、张嘉妮）、运营管理部（吴若吟）<br><strong>输出物：</strong>《UAT验收报告》</div>
+      </div>
+    </div>
+
+    <!-- 阶段2.4：上线与总结 -->
+    <div class="phase-group">
+      <div class="phase-title"><span class="dot"></span>2.4 上线与总结阶段（第8–9周）<span class="count">共 6 个里程碑</span></div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 17：上线评审会</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>上线条件确认</li>
+          <li>回滚方案确认</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>项目经理（吕娜）、全体相关方<br><strong>输出物：</strong>《上线评审纪要》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 18：生产环境部署</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>生产环境安装</li>
+          <li>参数配置</li>
+          <li>系统验证</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>信息技术部（运维：杨炯）<br><strong>输出物：</strong>《生产部署报告》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 19：生产环境验收</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>生产冒烟测试</li>
+          <li>业务验证（运营管理部：吴若吟复检；业务部门：周欣、张嘉妮；杭州环城北路营业部视频验证）</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、运营管理部（吴若吟）、业务部门（周欣、张嘉妮）<br><strong>输出物：</strong>《生产验收报告》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 20：灰度上线</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>小流量 AB 测试验证</li>
+          <li>监控观察</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>项目经理（吕娜）<br><strong>输出物：</strong>《灰度运行报告》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 21：正式上线</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>同花顺渠道全量开放</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>项目经理（吕娜）、全体相关方<br><strong>输出物：</strong>《上线总结报告》</div>
+      </div>
+
+      <div class="ms-card">
+        <div class="ms-header">
+          <span class="ms-name">里程碑 22：项目总结</span>
+          <span class="ms-status status-pending">未开始</span>
+        </div>
+        <div class="ms-detail">
+          <li>项目复盘</li>
+          <li>运维交接</li>
+          <li>培训交接</li>
+        </div>
+        <div class="ms-output"><strong>责任部门：</strong>信息技术部（项目经理：吕娜）、同花顺（石文杰）<br><strong>输出物：</strong>《项目总结报告》《运维手册》</div>
+      </div>
+    </div>
+
+    <!-- 并行：网厅H5功能对接 -->
+    <div class="ms-card" style="border-left-color:#10b981;background:#f0fdf4;">
+      <div class="ms-header">
+        <span class="ms-name">同步并行：网厅H5功能对接</span>
+        <span class="ms-status status-pending">与开户系统建设同步推进</span>
+      </div>
+      <div class="ms-detail">
+        <li>以H5网厅形式嵌入同花顺APP，完成16个功能模块的对接上线</li>
+        <li>涵盖：资产查询、持仓查询、交易记录、密码修改、风险测评、身份证更新、个人信息修改、银行卡变更等</li>
+      </div>
+      <div class="ms-output"><strong>责任部门：</strong>财富管理部（牵头立项）、信息技术部（技术实现）、同花顺开发团队<br><strong>输出物：</strong>立项申请书、功能清单、H5对接方案、验收报告<br><strong>备注：</strong>此项与开户系统建设同步进行，不占用关键路径</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三、上线后运营 -->
+  <div class="section">
+    <div class="section-title"><span class="num">三</span>同花顺开户系统上线后运营</div>
+    <p class="section-desc">本阶段聚焦数据监控与运营增长，确保持续产出。</p>
+
+    <div class="subsection">
+      <div class="subsection-title">3.1 数据跟踪与运营优化</div>
+      <div class="field"><span class="field-label">责任部门</span><span class="field-value">创新金融部（主责）、信息技术部（数据支持）、财富管理部（业务配合）</span></div>
+
+      <p style="font-weight:600;font-size:14px;margin:12px 0 6px;">核心指标</p>
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-green">
+          <div class="kpi-value">≥ 30%</div>
+          <div class="kpi-label">转化率（注册 → 提交开户）</div>
+        </div>
+        <div class="kpi-card kpi-blue">
+          <div class="kpi-value">≥ 70%</div>
+          <div class="kpi-label">成功率（提交 → 开户成功）</div>
+        </div>
+        <div class="kpi-card kpi-amber">
+          <div class="kpi-value">3000+</div>
+          <div class="kpi-label">年内开户流量目标（户）</div>
+        </div>
+      </div>
+
+      <p style="font-weight:600;font-size:14px;margin:8px 0 6px;">监控机制</p>
+      <ul class="info-list">
+        <li>搭建开户漏斗看板（日报/周报）</li>
+        <li>各环节流失率分析</li>
+        <li>异常波动预警与排查</li>
+      </ul>
+      <div class="field" style="margin-top:8px;"><span class="field-label">专项活动</span><span class="field-value">积极参与同花顺端内广告引流专项活动，争取更多流量入口</span></div>
+      <div class="field"><span class="field-label">交付物</span><span class="field-value">数据日报模板、月度运营分析报告、活动复盘报告</span></div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">3.2 增值提佣开发与上线 <span class="time-tag">与开户系统同步启动</span></div>
+      <div class="field"><span class="field-label">功能描述</span><span class="field-value">完成同花顺渠道增值提佣功能的技术开发与业务上线，实现客户增值服务费用的计提与管理，提升渠道收入贡献。本项目与开户系统同步启动，计划 8 周（第1–8周）内完成。</span></div>
+      <div class="field"><span class="field-label">负责团队</span><span class="field-value">同花顺（许敖）开发团队、信息技术部（王卫炎）、创新金融部、业务部门（周欣）</span></div>
+
+      <div class="biz-card">
+        <p>商务洽谈</p>
+        <p>同花顺商务对接人许敖与国都证券双方就增值提佣服务的选品范围、计提费率标准及分成结算方式等商务条款进行洽谈确认，签署增值服务合作协议。</p>
+      </div>
+
+      <p style="font-weight:600;font-size:14px;margin:14px 0 8px;">项目里程碑计划</p>
+
+      <div class="ms-grid" style="margin-top:8px;">
+
+        <div class="ms-card">
+          <div class="ms-header">
+            <span class="ms-name">里程碑 1：服务器准备</span>
+          </div>
+          <div class="ms-output"><strong>责任部门：</strong>信息技术部（王卫炎）、同花顺（许敖）<br><strong>输出物：</strong>服务器资源申请单、服务器环境确认单</div>
+        </div>
+
+        <div class="ms-card">
+          <div class="ms-header">
+            <span class="ms-name">里程碑 2：测试环境部署包准备</span>
+          </div>
+          <div class="ms-output"><strong>责任部门：</strong>同花顺（许敖）<br><strong>输出物：</strong>部署包版本说明、部署手册</div>
+        </div>
+
+        <div class="ms-card">
+          <div class="ms-header">
+            <span class="ms-name">里程碑 3：测试环境系统部署调试</span>
+          </div>
+          <div class="ms-output"><strong>责任部门：</strong>信息技术部（王卫炎）、同花顺（许敖）<br><strong>输出物：</strong>测试环境部署确认单</div>
+        </div>
+
+        <div class="ms-card">
+          <div class="ms-header">
+            <span class="ms-name">里程碑 4：前后端功能对接开发</span>
+          </div>
+          <div class="ms-output"><strong>责任部门：</strong>同花顺（许敖）<br><strong>输出物：</strong>接口文档、功能开发版本说明</div>
+        </div>
+
+        <div class="ms-card">
+          <div class="ms-header">
+            <span class="ms-name">里程碑 5：整体功能流程调试自测</span>
+          </div>
+          <div class="ms-output"><strong>责任部门：</strong>同花顺（许敖）<br><strong>输出物：</strong>自测报告</div>
+        </div>
+
+        <div class="ms-card">
+          <div class="ms-header">
+            <span class="ms-name">里程碑 6：产品确认里程碑</span>
+          </div>
+          <div class="ms-detail">
+            <li>产品经理功能验收</li>
+            <li>UI/交互效果确认</li>
+          </div>
+          <div class="ms-output"><strong>责任部门：</strong>创新金融部、同花顺（许敖）<br><strong>输出物：</strong>产品验收确认单</div>
+        </div>
+
+        <div class="ms-card">
+          <div class="ms-header">
+            <span class="ms-name">里程碑 7：系统测试里程碑</span>
+          </div>
+          <div class="ms-detail">
+            <li>整体功能测试验证</li>
+            <li>Bug 验证及整体回归测试</li>
+          </div>
+          <div class="ms-output"><strong>责任部门：</strong>同花顺（测试负责人）<br><strong>输出物：</strong>系统测试报告、Bug追踪清单</div>
+        </div>
+
+        <div class="ms-card">
+          <div class="ms-header">
+            <span class="ms-name">里程碑 8：券商验证</span>
+          </div>
+          <div class="ms-detail">
+            <li>国都侧业务验证</li>
+            <li>合规检查</li>
+          </div>
+          <div class="ms-output"><strong>责任部门：</strong>业务部门（周欣）、运营管理部<br><strong>输出物：</strong>券商验证报告</div>
+        </div>
+
+        <div class="ms-card">
+          <div class="ms-header">
+            <span class="ms-name">里程碑 9：生产环境部署</span>
+          </div>
+          <div class="ms-output"><strong>责任部门：</strong>信息技术部（王卫炎）<br><strong>输出物：</strong>生产上线部署单、运维交接文档</div>
+        </div>
+
+        <div class="ms-card">
+          <div class="ms-header">
+            <span class="ms-name">里程碑 10：生产环境验证</span>
+          </div>
+          <div class="ms-detail">
+            <li>生产环境功能冒烟测试</li>
+            <li>生产数据核对</li>
+          </div>
+          <div class="ms-output"><strong>责任部门：</strong>同花顺（许敖）、业务部门（周欣）<br><strong>输出物：</strong>生产验证报告</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 甘特图 -->
+  <div class="section">
+    <div class="section-title"><span class="num">附</span>项目整体进度甘特图</div>
+    <p style="margin:0 0 12px;color:#6b7280;font-size:13px;">开户系统建设：前置商务（第1周）+ 4阶段各2周（第2-9周）&nbsp;|&nbsp;增值提佣项目：与开户系统同步启动（第 1–8 周）</p>
+    <div class="gantt-wrap">
+      <table class="gantt-table">
+        <thead>
+          <tr>
+            <th style="width:30px">#</th>
+            <th class="th-name">里程碑</th>
+            <th class="th-dept">责任方</th>
+            <th>W1</th><th>W2</th><th>W3</th><th>W4</th>
+            <th>W5</th><th>W6</th><th>W7</th><th>W8</th>
+            <th>W9</th><th>W10</th><th>W11</th><th>W12</th>
+            <th>W13</th><th>W14</th><th>W15</th><th>W16</th>
+            <th>W17</th><th>W18</th><th>W19</th><th>W20</th>
+          </tr>
+        </thead>
+        <tbody>          <tr class="section-row track-legacy"><td></td><td colspan="21">🔧 一、现有系统改造升级<span class="gantt-time time-legacy">⏱ 待排期</span></td></tr>          
+<tr>            <td>1</td><td style="text-align:left"><span class="badge-legacy">改造</span>1.1 手机号同花顺一键注册</td><td>信息技术部 / 财富管理部 / 创新金融部</td>            <td colspan="20"><span class="bar-pending">待排期</span></td>          </tr>          
+<tr>            <td>2</td><td style="text-align:left"><span class="badge-legacy">改造</span>1.2 营业部选择隐藏优化</td><td>信息技术部 / 财富管理部</td>            <td colspan="20"><span class="bar-pending">待排期</span></td>          </tr>          
+<tr>            <td>3</td><td style="text-align:left"><span class="badge-legacy">改造</span>1.3 信息补充页折叠层</td><td>信息技术部</td>            <td colspan="20"><span class="bar-pending">待排期</span></td>          </tr>          
+<tr>            <td>4</td><td style="text-align:left"><span class="badge-legacy">改造</span>1.4 开户断点企微推送</td><td>信息技术部 / 创新金融部</td>            <td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td>            <td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>5</td><td style="text-align:left"><span class="badge-legacy">改造</span>1.5 产品抓手建设</td><td>财富管理部 / 创新金融部 / 自营条线</td>            <td colspan="20"><span class="bar-pending">待排期</span></td>          </tr>          <tr class="section-row track-main"><td></td><td colspan="21">🚀 二、同花顺开户系统建设<span class="gantt-time time-main">⏱ W1-W9</span></td></tr>          <tr class="section-row track-sub"><td></td><td colspan="21">  ▸ 前置：单一来源采购与商务谈判<span class="gantt-time time-main">⏱ W1</span></td></tr>          
+<tr>            <td>6</td><td style="text-align:left"><span class="badge-main">主</span>M1 单一来源采购审批</td><td>信息技术部(吕娜)/运营管理部(吴若吟)</td>            <td><span class="bar bar-amber">采购</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>7</td><td style="text-align:left"><span class="badge-main">主</span>M2 商务谈判与签约</td><td>同花顺(石文杰)/信息技术部(吕娜)</td>            <td><span class="bar bar-amber">商务</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          <tr class="section-row track-sub"><td></td><td colspan="21">  ▸ 2.1 项目启动与需求<span class="gantt-time time-main">⏱ W2-W3</span></td></tr>          
+<tr>            <td>8</td><td style="text-align:left"><span class="badge-main">主</span>M3 项目动员会</td><td>同花顺(石文杰)/信息技术部(吕娜)/业务部门(周欣,张嘉妮)/运营管理部(吴若吟)</td>            <td></td><td><span class="bar bar-blue">启动</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>9</td><td style="text-align:left"><span class="badge-main">主</span>M4 需求沟通</td><td>同花顺(石文杰)/信息技术部(吕娜)/业务部门(周欣,张嘉妮)/运营管理部(吴若吟)</td>            <td></td><td><span class="bar-progress">进行中</span></td><td><span class="bar bar-blue">需求</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>10</td><td style="text-align:left"><span class="badge-main">主</span>M5 UI/交互确认</td><td>同花顺(石文杰)/信息技术部(吕娜)/业务部门(周欣,张嘉妮)</td>            <td></td><td></td><td><span class="bar bar-blue">UI</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>11</td><td style="text-align:left"><span class="badge-main">主</span>M6 需求确认</td><td>同花顺(石文杰)/信息技术部(吕娜)/业务部门(周欣,张嘉妮)</td>            <td></td><td></td><td><span class="bar bar-blue">确认</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          <tr class="section-row track-sub"><td></td><td colspan="21">  ▸ 2.2 设计与开发<span class="gantt-time time-main">⏱ W4-W5</span></td></tr>          
+<tr>            <td>12</td><td style="text-align:left"><span class="badge-main">主</span>M7 技术方案设计</td><td>同花顺(技术负责人)/信息技术部(吕娜)</td>            <td></td><td></td><td></td><td><span class="bar bar-blue">设计</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>13</td><td style="text-align:left"><span class="badge-main">主</span>M8 环境准备</td><td>信息技术部(运维：杨炯)</td>            <td></td><td></td><td></td><td><span class="bar bar-blue">环境</span></td><td><span class="bar bar-blue">环境</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>14</td><td style="text-align:left"><span class="badge-main">主</span>M9 测试环境部署</td><td>信息技术部(运维：杨炯)</td>            <td></td><td></td><td></td><td></td><td><span class="bar bar-blue">部署</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>15</td><td style="text-align:left"><span class="badge-main">主</span>M10 功能开发</td><td>同花顺(开发负责人)/信息技术部(吕娜)</td>            <td></td><td></td><td></td><td><span class="bar bar-blue">开发</span></td><td><span class="bar bar-blue">开发</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          <tr class="section-row track-sub"><td></td><td colspan="21">  ▸ 2.3 测试与修复<span class="gantt-time time-main">⏱ W6-W7</span></td></tr>          
+<tr>            <td>16</td><td style="text-align:left"><span class="badge-main">主</span>M11 第三方系统联调</td><td>同花顺(技术负责人)/信息技术部(吕娜)</td>            <td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">联调</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>17</td><td style="text-align:left"><span class="badge-main">主</span>M12 同花顺一轮测试</td><td>同花顺(测试负责人)/信息技术部(吕娜)</td>            <td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">测试</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>18</td><td style="text-align:left"><span class="badge-main">主</span>M13 缺陷修复（第一轮）</td><td>同花顺（开发负责人）</td>            <td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">修复</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>19</td><td style="text-align:left"><span class="badge-main">主</span>M14 提交国都测试</td><td>同花顺(石文杰)/信息技术部(吕娜)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">提测</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>20</td><td style="text-align:left"><span class="badge-main">主</span>M15 券商一轮 & 同花顺二轮</td><td>业务部门(周欣,张嘉妮)/运营管理部(吴若吟)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">验证</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>21</td><td style="text-align:left"><span class="badge-main">主</span>M16 缺陷修复（第二轮）+ UAT</td><td>同花顺(开发)/业务部门(周欣,张嘉妮)/运营管理部(吴若吟)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">UAT</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          <tr class="section-row track-sub"><td></td><td colspan="21">  ▸ 2.4 上线与总结<span class="gantt-time time-main">⏱ W8-W9</span></td></tr>          
+<tr>            <td>22</td><td style="text-align:left"><span class="badge-main">主</span>M17 上线评审会</td><td>项目经理(吕娜)/全体相关方</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">评审</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>23</td><td style="text-align:left"><span class="badge-main">主</span>M18 生产环境部署</td><td>信息技术部(运维：杨炯)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">部署</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>24</td><td style="text-align:left"><span class="badge-main">主</span>M19 生产环境验收</td><td>同花顺(石文杰)/运营管理部(吴若吟)/业务部门(周欣,张嘉妮)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">验收</span></td><td><span class="bar bar-blue">验收</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>25</td><td style="text-align:left"><span class="badge-main">主</span>M20 灰度上线</td><td>项目经理(吕娜)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">灰度</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>26</td><td style="text-align:left"><span class="badge-main">主</span>M21 正式上线</td><td>项目经理(吕娜)/全体相关方</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">上线</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>27</td><td style="text-align:left"><span class="badge-main">主</span>M22 项目总结</td><td>信息技术部(吕娜)/同花顺(石文杰)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">总结</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          <tr class="section-row track-operate"><td></td><td colspan="21">📊 三、上线后运营<span class="gantt-time time-operate">⏱ 正式上线后</span></td></tr>          
+<tr>            <td>28</td><td style="text-align:left">数据漏斗看板搭建</td><td>创新金融部 / 信息技术部</td>            <td colspan="20"><span class="bar-pending">正式上线后启动</span></td>          </tr>          
+<tr>            <td>29</td><td style="text-align:left">端内广告引流专项活动</td><td>创新金融部</td>            <td colspan="20"><span class="bar-pending">正式上线后启动</span></td>          </tr>          
+<tr>            <td>30</td><td style="text-align:left">月度运营复盘与优化</td><td>创新金融部 / 财富管理部</td>            <td colspan="20"><span class="bar-pending">正式上线后启动</span></td>          </tr>          <tr class="section-row track-parallel"><td></td><td colspan="21">⚡ 增值提佣开发与上线（与开户系统同步并行）<span class="gantt-time time-parallel">⏱ W1-W8</span></td></tr>          
+<tr>            <td>31</td><td style="text-align:left"><span class="parallel-badge">并行</span>M1 服务器准备</td><td>信息技术部(王卫炎) / 同花顺（许敖）</td>            <td><span class="bar bar-orange">准备</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>32</td><td style="text-align:left"><span class="parallel-badge">并行</span>M2 测试环境部署包准备</td><td>同花顺（许敖）</td>            <td><span class="bar bar-orange">包准备</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>33</td><td style="text-align:left"><span class="parallel-badge">并行</span>M3 测试环境部署调试</td><td>信息技术部(王卫炎) / 同花顺（许敖）</td>            <td><span class="bar bar-orange">调试</span></td><td><span class="bar bar-orange">调试</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>34</td><td style="text-align:left"><span class="parallel-badge">并行</span>M4 前后端功能对接开发</td><td>同花顺（许敖）</td>            <td></td><td><span class="bar bar-orange">开发</span></td><td><span class="bar bar-orange">开发</span></td><td><span class="bar bar-orange">开发</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>35</td><td style="text-align:left"><span class="parallel-badge">并行</span>M5 整体功能调试自测</td><td>同花顺（许敖）</td>            <td></td><td></td><td></td><td></td><td><span class="bar bar-orange">自测</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>36</td><td style="text-align:left"><span class="parallel-badge">并行</span>M6 产品确认</td><td>创新金融部 / 同花顺（许敖）</td>            <td></td><td></td><td></td><td></td><td><span class="bar bar-orange">确认</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>37</td><td style="text-align:left"><span class="parallel-badge">并行</span>M7 系统测试</td><td>同花顺（测试负责人）</td>            <td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-orange">测试</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>38</td><td style="text-align:left"><span class="parallel-badge">并行</span>M8 券商验证</td><td>业务部门(周欣) / 运营管理部</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-orange">验证</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>39</td><td style="text-align:left"><span class="parallel-badge">并行</span>M9 生产环境部署</td><td>信息技术部(王卫炎)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-orange">部署</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>40</td><td style="text-align:left"><span class="parallel-badge">并行</span>M10 生产环境验证</td><td>同花顺（许敖）/ 业务部门(周欣)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-orange">验证</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 项目沟通机制 -->
+  <div class="section">
+    <div class="section-title"><span class="num">通</span>项目沟通机制</div>
+    <p class="section-desc">为确保项目顺利推进，建立以下沟通机制：</p>
+    <div class="comm-grid">
+      <div class="comm-card">
+        <div class="comm-icon">📋</div>
+        <div class="comm-title">项目周会</div>
+        <div class="comm-detail"><strong>频率：</strong>每周一次<br><strong>参与人：</strong>三方部门接口人<br><strong>内容：</strong>进度同步、问题升级、资源协调</div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-icon">🔧</div>
+        <div class="comm-title">技术评审会</div>
+        <div class="comm-detail"><strong>频率：</strong>按需召开<br><strong>参与人：</strong>IT + 同花顺技术<br><strong>内容：</strong>技术方案评审、接口对齐</div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-icon">🚀</div>
+        <div class="comm-title">上线评审会</div>
+        <div class="comm-detail"><strong>频率：</strong>上线前<br><strong>参与人：</strong>全体相关方<br><strong>内容：</strong>上线条件确认、风险评估</div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-icon">📊</div>
+        <div class="comm-title">月度运营复盘</div>
+        <div class="comm-detail"><strong>频率：</strong>每月一次<br><strong>参与人：</strong>创新金融部 + 财富管理部<br><strong>内容：</strong>数据复盘、优化策略</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer">以上为国都开户系统升级项目整体计划，各阶段具体排期待相关部门确认后细化。</p>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>信息补充</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+            background: #F3F2F7;
+            min-height: 100vh;
+            color: #333;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            max-width: 440px;
+            margin: 0 auto;
+            background: #F3F2F7;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 120px;
+        }
+
+        /* 蓝色顶部导航 */
+        .nav-bar {
+            background: #4279DA;
+            padding: 44px 0 0;
+            position: relative;
+        }
+
+        .nav-bar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 44px;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .back-btn:active { background: rgba(255,255,255,0.12); }
+        .back-btn svg { width: 20px; height: 20px; color: #fff; }
+
+        .nav-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        /* 进度条 */
+        .progress-wrap {
+            background: #4279DA;
+            padding: 0 20px 18px;
+        }
+
+        .progress-bar {
+            height: 3px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .progress-fill {
+            width: 30%;
+            height: 100%;
+            background: #fff;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .progress-dot {
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 100%;
+            left: 30%;
+            transform: translateX(-50%);
+            margin-top: 6px;
+            background: #7FA3E6;
+            color: #fff;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        /* 表单列表组 */
+        .list-group {
+            margin-top: 12px;
+            background: #fff;
+            border-top: 1px solid #EDEDED;
+            border-bottom: 1px solid #EDEDED;
+        }
+
+        .list-group.spaced {
+            margin-top: 10px;
+        }
+
+        .list-row {
+            display: flex;
+            align-items: center;
+            min-height: 52px;
+            padding: 0 16px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .list-row:active { background: #F7F7F7; }
+
+        .list-row:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 16px;
+            right: 0;
+            bottom: 0;
+            height: 0.5px;
+            background: #EFEFEF;
+        }
+
+        .list-label {
+            flex: 0 0 auto;
+            font-size: 16px;
+            color: #111;
+            font-weight: 400;
+        }
+
+        .list-value {
+            flex: 1;
+            text-align: right;
+            font-size: 15px;
+            color: #999;
+            padding-right: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .list-value.filled { color: #333; }
+
+        .list-arrow {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .list-arrow svg {
+            width: 13px;
+            height: 13px;
+            color: #C0C0C0;
+        }
+
+        /* 隐藏的原生输入/选择 */
+        .list-row input.hidden-input,
+        .list-row select.hidden-select {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .list-row input[type="text"].inline-input {
+            border: none;
+            outline: none;
+            text-align: right;
+            font-size: 15px;
+            color: #333;
+            background: transparent;
+            width: 60%;
+            padding-right: 6px;
+            font-family: inherit;
+        }
+
+        .list-row input[type="text"].inline-input::placeholder {
+            color: #999;
+        }
+
+        /* 折叠区的带边框输入框 */
+        .collapse-row {
+            display: flex;
+            align-items: center;
+            min-height: 52px;
+            padding: 0 16px;
+            position: relative;
+        }
+        .collapse-row:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 16px; right: 0; bottom: 0;
+            height: 0.5px;
+            background: #EFEFEF;
+        }
+        .collapse-row input[type="text"].inline-input {
+            margin-left: auto;
+            width: 210px;
+            min-width: 180px;
+            height: 34px;
+            border: 1px solid #D9D9D9;
+            border-radius: 6px;
+            background: #FFFFFF;
+            text-align: left;
+            font-size: 15px;
+            color: #333;
+            padding: 0 12px;
+            box-sizing: border-box;
+            outline: none;
+            font-family: inherit;
+            transition: border-color 0.15s;
+        }
+        .collapse-row input[type="text"].inline-input:focus {
+            border-color: #4279DA;
+        }
+        .collapse-row input[type="text"].inline-input::placeholder {
+            color: #B8B8B8;
+            font-size: 14px;
+        }
+
+        /* 折叠组件 */
+        .collapse-wrapper {
+            position: relative;
+        }
+
+        .optional-badge {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 11px;
+            color: #999;
+            background: #EEEEEE;
+            padding: 2px 8px;
+            border-radius: 10px;
+            vertical-align: middle;
+            font-weight: 400;
+        }
+
+        .collapse-header-row {
+            background: #fff;
+        }
+
+        .collapse-header-row .list-label {
+            display: flex;
+            align-items: center;
+        }
+
+        .collapse-arrow {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .collapse-arrow svg {
+            width: 14px;
+            height: 14px;
+            color: #B0B0B0;
+        }
+
+        .collapse-wrapper.expanded .collapse-arrow {
+            transform: rotate(180deg);
+        }
+
+        .collapse-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+            background: #fff;
+        }
+
+        .collapse-wrapper.expanded .collapse-body {
+            max-height: 200px;
+        }
+
+        /* 只读行样式（营业部信息） */
+        .list-row.readonly-row {
+            cursor: default;
+            background: #FAFAFC;
+        }
+        .list-row.readonly-row:active { background: #FAFAFC; }
+
+        /* 禁用行样式（勾稽联动：联系地址一致时隐藏选择地区） */
+        .list-row.disabled-row {
+            display: none !important;
+        }
+
+        /* 底部按钮 */
+        .footer {
+            position: fixed;
+            left: 0; right: 0;
+            bottom: 0;
+            background: #fff;
+            padding: 12px 0 24px;
+            border-top: 1px solid #EEEEEE;
+            z-index: 20;
+        }
+
+        .footer-inner {
+            max-width: 440px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .next-btn {
+            background: transparent;
+            border: none;
+            color: #4279DA;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 10px 20px;
+            letter-spacing: 2px;
+            font-family: inherit;
+        }
+
+        .next-btn:active { opacity: 0.6; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: rgba(0,0,0,0.78);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            z-index: 200;
+            text-align: center;
+            max-width: 80vw;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* 自定义底部下拉选择器 */
+        .picker-mask {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, background 0.3s;
+            z-index: 150;
+        }
+        .picker-mask.show {
+            opacity: 1;
+            visibility: visible;
+            background: rgba(0,0,0,0.45);
+        }
+
+        .picker-sheet {
+            position: fixed;
+            left: 0; right: 0; bottom: 0;
+            background: #F7F7F7;
+            border-radius: 16px 16px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 160;
+            max-width: 440px;
+            margin: 0 auto;
+            max-height: 72vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .picker-sheet.show {
+            transform: translateY(0);
+        }
+
+        .picker-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: #fff;
+            border-radius: 16px 16px 0 0;
+            border-bottom: 0.5px solid #EEEEEE;
+            flex: 0 0 auto;
+        }
+
+        .picker-cancel,
+        .picker-confirm {
+            font-size: 16px;
+            padding: 6px 8px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .picker-cancel { color: #888; }
+        .picker-confirm { color: #4279DA; font-weight: 500; }
+        .picker-cancel:active { opacity: 0.6; }
+        .picker-confirm:active { opacity: 0.6; }
+
+        .picker-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #222;
+        }
+
+        .picker-list {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            background: #fff;
+            padding-bottom: 24px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .picker-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 52px;
+            padding: 0 20px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .picker-option:active { background: #F5F8FF; }
+
+        .picker-option:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 20px; right: 20px; bottom: 0;
+            height: 0.5px;
+            background: #F0F0F0;
+        }
+
+        .picker-option-text {
+            font-size: 16px;
+            color: #222;
+        }
+
+        .picker-option.selected .picker-option-text {
+            color: #4279DA;
+            font-weight: 500;
+        }
+
+        .picker-check {
+            width: 20px; height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .picker-option.selected .picker-check {
+            opacity: 1;
+        }
+        .picker-check svg {
+            width: 18px; height: 18px;
+            color: #4279DA;
+        }
+
+        .picker-option.disabled {
+            cursor: not-allowed;
+        }
+        .picker-option.disabled .picker-option-text {
+            color: #BBB;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 顶部导航 -->
+    <div class="nav-bar">
+        <div class="nav-bar-inner">
+            <button class="back-btn" onclick="showToast('返回')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <div class="nav-title">信息补充</div>
+        </div>
+
+        <!-- 进度条 -->
+        <div class="progress-wrap">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+                <div class="progress-dot">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#4279DA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <div class="progress-text">30%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 表单列表 1 -->
+    <div class="list-group">
+
+        <div class="list-row" onclick="openSelector('education')">
+            <label class="list-label">学历</label>
+            <div class="list-value filled" id="val-education">硕士</div>
+            <div class="list-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+            <select class="hidden-select" id="sel-education" onchange="setValue('education', this)">
+                <option value="博士及以上">博士及以上</option>
+                <option value="硕士" selected>硕士</option>
+                <option value="本科">本科</option>
+                <option value="大专">大专</option>
+                <option value="高中/中专">高中/中专</option>
+                <option value="初中及以下">初中及以下</option>
+            </select>
+        </div>
+
+        <div class="list-row" onclick="openSelector('occupationType')">
+            <label class="list-label">职业类型</label>
+            <div class="list-value" id="val-occupationType">请选择</div>
+            <div class="list-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+            <select class="hidden-select" id="sel-occupationType" onchange="setValue('occupationType', this)">
+                <option value="" disabled selected>请选择</option>
+                <option value="机关事业单位工作人员">机关事业单位工作人员</option>
+                <option value="企业管理人员">企业管理人员</option>
+                <option value="企业一般职员">企业一般职员</option>
+                <option value="专业技术人员">专业技术人员</option>
+                <option value="个体经营者">个体经营者</option>
+                <option value="自由职业者">自由职业者</option>
+                <option value="学生">学生</option>
+                <option value="退休人员">退休人员</option>
+                <option value="其他">其他</option>
+            </select>
+        </div>
+
+        <div class="list-row" onclick="openSelector('position')">
+            <label class="list-label">职务</label>
+            <div class="list-value" id="val-position">请选择</div>
+            <div class="list-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+            <select class="hidden-select" id="sel-position" onchange="setValue('position', this)">
+                <option value="" disabled selected>请选择</option>
+                <option value="高级管理人员">高级管理人员</option>
+                <option value="中级管理人员">中级管理人员</option>
+                <option value="基层管理人员">基层管理人员</option>
+                <option value="普通员工">普通员工</option>
+                <option value="负责人/法定代表人">负责人/法定代表人</option>
+                <option value="无">无</option>
+            </select>
+        </div>
+
+        <div class="list-row" onclick="openSelector('income')">
+            <label class="list-label">年均收入</label>
+            <div class="list-value" id="val-income">请选择</div>
+            <div class="list-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+            <select class="hidden-select" id="sel-income" onchange="setValue('income', this)">
+                <option value="" disabled selected>请选择</option>
+                <option value="10万以下">10万以下</option>
+                <option value="10万-30万">10万-30万</option>
+                <option value="30万-50万">30万-50万</option>
+                <option value="50万-100万">50万-100万</option>
+                <option value="100万以上">100万以上</option>
+            </select>
+        </div>
+
+        <div class="list-row" onclick="openSelector('contactAddressType')">
+            <label class="list-label">联系地址</label>
+            <div class="list-value filled" id="val-contactAddressType">与证件地址不一致</div>
+            <div class="list-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+            <select class="hidden-select" id="sel-contactAddressType" onchange="setValue('contactAddressType', this)">
+                <option value="与证件地址一致">与证件地址一致</option>
+                <option value="与证件地址不一致" selected>与证件地址不一致</option>
+            </select>
+        </div>
+
+        <div class="list-row" id="row-region" onclick="openSelector('region')">
+            <label class="list-label">选择地区</label>
+            <div class="list-value" id="val-region">请选择</div>
+            <div class="list-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+            <select class="hidden-select" id="sel-region" onchange="setValue('region', this)">
+                <option value="" disabled selected>请选择</option>
+                <option value="北京市-北京市">北京市-北京市</option>
+                <option value="上海市-上海市">上海市-上海市</option>
+                <option value="广东省-广州市">广东省-广州市</option>
+                <option value="广东省-深圳市">广东省-深圳市</option>
+                <option value="浙江省-杭州市">浙江省-杭州市</option>
+                <option value="浙江省-宁波市">浙江省-宁波市</option>
+                <option value="江苏省-南京市">江苏省-南京市</option>
+                <option value="江苏省-苏州市">江苏省-苏州市</option>
+            </select>
+        </div>
+
+        <!-- 折叠：选填信息 -->
+        <div class="collapse-wrapper" id="optionalCollapse">
+            <div class="list-row collapse-header-row" onclick="toggleCollapse()">
+                <label class="list-label">
+                    选填信息
+                    <span class="optional-badge">选填</span>
+                </label>
+                <div class="collapse-arrow" id="collapseArrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+            </div>
+            <div class="collapse-body" id="collapseBody">
+                <div class="collapse-row">
+                    <label class="list-label">工作单位</label>
+                    <input type="text" class="inline-input" id="workUnit" placeholder="请输入">
+                </div>
+                <div class="collapse-row">
+                    <label class="list-label">邮编</label>
+                    <input type="text" class="inline-input" id="zipCode" placeholder="请输入" maxlength="6">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 表单列表 2 -->
+    <div class="list-group spaced">
+
+        <div class="list-row" onclick="openSelector('controller')">
+            <label class="list-label">账户实际控制人</label>
+            <div class="list-value filled" id="val-controller">本人</div>
+            <div class="list-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+            <select class="hidden-select" id="sel-controller" onchange="setValue('controller', this)">
+                <option value="本人" selected>本人</option>
+                <option value="配偶">配偶</option>
+                <option value="父母">父母</option>
+                <option value="子女">子女</option>
+                <option value="其他">其他</option>
+            </select>
+        </div>
+
+        <div class="list-row" onclick="openSelector('beneficiary')">
+            <label class="list-label">账户实际受益人</label>
+            <div class="list-value filled" id="val-beneficiary">本人</div>
+            <div class="list-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+            <select class="hidden-select" id="sel-beneficiary" onchange="setValue('beneficiary', this)">
+                <option value="本人" selected>本人</option>
+                <option value="配偶">配偶</option>
+                <option value="父母">父母</option>
+                <option value="子女">子女</option>
+                <option value="其他">其他</option>
+            </select>
+        </div>
+
+    </div>
+
+    <!-- 营业部信息 -->
+    <div class="list-group spaced">
+        <div class="list-row readonly-row">
+            <label class="list-label">营业部信息</label>
+            <div class="list-value filled" style="padding-right:0;">杭州环城北路证券营业部</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 底部按钮 -->
+<div class="footer">
+    <div class="footer-inner">
+        <button class="next-btn" onclick="handleNext()">下&nbsp;&nbsp;一&nbsp;&nbsp;步</button>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- 自定义底部下拉选择器 -->
+<div class="picker-mask" id="pickerMask" onclick="closePicker()"></div>
+<div class="picker-sheet" id="pickerSheet">
+    <div class="picker-header">
+        <button class="picker-cancel" onclick="closePicker()">取消</button>
+        <div class="picker-title" id="pickerTitle">请选择</div>
+        <button class="picker-confirm" onclick="confirmPicker()">确定</button>
+    </div>
+    <div class="picker-list" id="pickerList"></div>
+</div>
+
+<script>
+    // 折叠选填区
+    function toggleCollapse() {
+        var wrap = document.getElementById('optionalCollapse');
+        wrap.classList.toggle('expanded');
+    }
+
+    // ===== 自定义底部下拉选择器 =====
+    var currentPickerKey = '';
+    var tempSelectedIndex = -1;
+
+    function openSelector(key) {
+        // 勾稽兜底：联系地址为"一致"时，禁止打开选择地区
+        if (key === 'region') {
+            var contactAddr = (document.getElementById('val-contactAddressType') || {}).textContent || '';
+            if (contactAddr === '与证件地址一致') {
+                showToast('当前联系地址与证件一致，无需选择地区');
+                return;
+            }
+        }
+        var sel = document.getElementById('sel-' + key);
+        if (!sel || !sel.options || sel.options.length === 0) return;
+
+        currentPickerKey = key;
+        tempSelectedIndex = sel.selectedIndex >= 0 ? sel.selectedIndex : 0;
+
+        // 跳过占位的 disabled 选项（如"请选择"），若其为 selected 则临时索引设为 -1
+        if (sel.options[tempSelectedIndex] && sel.options[tempSelectedIndex].disabled) {
+            tempSelectedIndex = -1;
+        }
+
+        document.getElementById('pickerTitle').textContent = keyMap(key);
+        renderPickerOptions(sel);
+
+        document.getElementById('pickerMask').classList.add('show');
+        document.getElementById('pickerSheet').classList.add('show');
+    }
+
+    function renderPickerOptions(sel) {
+        var list = document.getElementById('pickerList');
+        list.innerHTML = '';
+        for (var i = 0; i < sel.options.length; i++) {
+            var opt = sel.options[i];
+            var row = document.createElement('div');
+            row.className = 'picker-option';
+            if (opt.disabled) row.classList.add('disabled');
+            if (i === tempSelectedIndex) row.classList.add('selected');
+            row.setAttribute('data-index', i);
+
+            var text = document.createElement('div');
+            text.className = 'picker-option-text';
+            text.textContent = opt.text;
+
+            var check = document.createElement('div');
+            check.className = 'picker-check';
+            check.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+            row.appendChild(text);
+            row.appendChild(check);
+
+            (function(idx, disabled) {
+                row.onclick = function(e) {
+                    e.stopPropagation();
+                    if (disabled) return;
+                    tempSelectedIndex = idx;
+                    // 更新高亮
+                    var allOpts = list.querySelectorAll('.picker-option');
+                    for (var j = 0; j < allOpts.length; j++) {
+                        allOpts[j].classList.remove('selected');
+                    }
+                    row.classList.add('selected');
+                    // 点击即选即关（可选：如需改为必须点确定才关闭，注释掉下面两行）
+                    setTimeout(function() { confirmPicker(); }, 80);
+                };
+            })(i, opt.disabled);
+
+            list.appendChild(row);
+        }
+        // 滚动到选中项
+        setTimeout(function() {
+            if (tempSelectedIndex >= 0) {
+                var selectedEl = list.querySelector('.picker-option.selected');
+                if (selectedEl) selectedEl.scrollIntoView({ block: 'center' });
+            }
+        }, 50);
+    }
+
+    function closePicker() {
+        document.getElementById('pickerMask').classList.remove('show');
+        document.getElementById('pickerSheet').classList.remove('show');
+        currentPickerKey = '';
+        tempSelectedIndex = -1;
+    }
+
+    function confirmPicker() {
+        if (!currentPickerKey) { closePicker(); return; }
+        if (tempSelectedIndex < 0) { closePicker(); return; }
+        var sel = document.getElementById('sel-' + currentPickerKey);
+        if (sel) {
+            sel.selectedIndex = tempSelectedIndex;
+            setValue(currentPickerKey, sel);
+        }
+        closePicker();
+    }
+
+    function keyMap(k) {
+        return {
+            education: '学历',
+            occupationType: '职业类型',
+            position: '职务',
+            income: '年均收入',
+            contactAddressType: '联系地址',
+            region: '选择地区',
+            controller: '账户实际控制人',
+            beneficiary: '账户实际受益人'
+        }[k] || k;
+    }
+
+    // 设置显示值
+    function setValue(key, sel) {
+        var text = sel.options[sel.selectedIndex].text;
+        var target = document.getElementById('val-' + key);
+        if (target) {
+            target.textContent = text;
+            if (text && text !== '请选择') {
+                target.classList.add('filled');
+            } else {
+                target.classList.remove('filled');
+            }
+        }
+        // 勾稽：联系地址变化时联动控制「选择地区」
+        if (key === 'contactAddressType') {
+            syncRegionByAddress(text);
+        }
+    }
+
+    // 勾稽联动：联系地址 vs 选择地区
+    // 规则：联系地址 = 与证件地址一致 → 隐藏并清空选择地区
+    //       联系地址 = 与证件地址不一致 → 显示选择地区（要求填写）
+    function syncRegionByAddress(contactAddrValue) {
+        if (contactAddrValue === undefined || contactAddrValue === null) {
+            contactAddrValue = (document.getElementById('val-contactAddressType') || {}).textContent || '';
+        }
+        var row = document.getElementById('row-region');
+        var valEl = document.getElementById('val-region');
+        var selEl = document.getElementById('sel-region');
+        var isSame = (contactAddrValue === '与证件地址一致');
+        if (isSame) {
+            // 与证件地址一致：隐藏行 + 清空值
+            if (row) row.classList.add('disabled-row');
+            if (selEl) {
+                selEl.selectedIndex = 0; // 回到 disabled 的"请选择"占位
+            }
+            if (valEl) {
+                valEl.textContent = '请选择';
+                valEl.classList.remove('filled');
+            }
+        } else {
+            // 与证件地址不一致：显示行
+            if (row) row.classList.remove('disabled-row');
+        }
+    }
+
+    // 页面初始化后立即应用一次联动状态
+    document.addEventListener('DOMContentLoaded', function() {
+        syncRegionByAddress();
+    });
+    // 兜底：脚本在 DOM 后执行，立即执行一次以防 DOMContentLoaded 已触发
+    (function(){ try { syncRegionByAddress(); } catch(e){} })();
+
+    function handleNext() {
+        var education = document.getElementById('val-education').textContent;
+        var occupationType = document.getElementById('val-occupationType').textContent;
+        var position = document.getElementById('val-position').textContent;
+        var income = document.getElementById('val-income').textContent;
+        var workUnit = document.getElementById('workUnit').value.trim();
+        var contactAddr = document.getElementById('val-contactAddressType').textContent;
+        var region = document.getElementById('val-region').textContent;
+        var zip = document.getElementById('zipCode').value.trim();
+        var controller = document.getElementById('val-controller').textContent;
+        var beneficiary = document.getElementById('val-beneficiary').textContent;
+
+        var required = [
+            { k: '职业类型', v: occupationType },
+            { k: '职务', v: position },
+            { k: '年均收入', v: income }
+        ];
+        // 勾稽：仅当联系地址选了"不一致"时，才校验"选择地区"必填
+        if (contactAddr !== '与证件地址一致') {
+            required.push({ k: '选择地区', v: region });
+        }
+
+        for (var i = 0; i < required.length; i++) {
+            if (required[i].v === '请选择') {
+                showToast('请选择' + required[i].k);
+                return;
+            }
+        }
+
+        var msg = '信息确认：\n';
+        msg += '学历：' + education + '\n';
+        msg += '职业类型：' + occupationType + '\n';
+        msg += '职务：' + position + '\n';
+        msg += '年均收入：' + income + '\n';
+        if (workUnit) msg += '工作单位：' + workUnit + '\n';
+        msg += '联系地址：' + contactAddr + '\n';
+        // 勾稽：仅当联系地址选了"不一致"时，才在确认信息中显示地区
+        if (contactAddr !== '与证件地址一致') {
+            msg += '选择地区：' + region + '\n';
+        }
+        if (zip) msg += '邮编：' + zip + '\n';
+        msg += '账户实际控制人：' + controller + '\n';
+        msg += '账户实际受益人：' + beneficiary + '\n';
+        msg += '营业部信息：杭州环城北路证券营业部';
+
+        showToast('保存成功，进入下一步');
+        setTimeout(function() { alert(msg); }, 400);
+    }
+
+    function showToast(msg) {
+        var t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(function() { t.classList.remove('show'); }, 1800);
+    }
+</script>
+
+</body>
+</html>
