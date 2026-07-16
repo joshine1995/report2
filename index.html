@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -736,6 +736,166 @@
     overflow: hidden;
   }
 
+  /* ── 流量预测图 ── */
+  .flow-section {
+    margin-top: 24px;
+  }
+  .flow-section .flow-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .flow-section .flow-title .flow-icon {
+    background: #dc2626;
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .flow-chart {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 20px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .flow-chart::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b, #ef4444);
+  }
+  /* 时间轴 */
+  .flow-timeline {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 10px;
+    position: relative;
+    height: 220px;
+    margin-bottom: 8px;
+  }
+  .flow-timeline::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 5%; right: 5%;
+    height: 2px;
+    background: #d1d5db;
+  }
+  /* 柱状图 */
+  .flow-bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+  .flow-bar {
+    width: 28px;
+    border-radius: 4px 4px 0 0;
+    min-height: 4px;
+    transition: height 0.3s;
+    position: relative;
+  }
+  .flow-bar:hover {
+    opacity: 0.8;
+    transform: scaleX(1.1);
+  }
+  .flow-bar-label {
+    font-size: 10px;
+    color: #6b7280;
+    margin-top: 6px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .flow-bar-value {
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .flow-bar-value.top {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  /* 阶段标注 */
+  .flow-phase-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px 0;
+    margin-top: 4px;
+    border-top: 1px dashed #e5e7eb;
+  }
+  .flow-phase-item {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    color: #6b7280;
+    padding: 2px 0;
+  }
+  .flow-phase-item strong {
+    display: block;
+    font-size: 11px;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .flow-phase-item .tag {
+    display: inline-block;
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+  .tag-green { background: #d1fae5; color: #065f46; }
+  .tag-amber { background: #fef3c7; color: #92400e; }
+  .tag-red { background: #fee2e2; color: #991b1b; }
+
+  .flow-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .flow-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .flow-legend-item .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .flow-legend-item .line {
+    width: 24px;
+    height: 3px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
   @media print {
     body { background: #fff; }
     .container { max-width: 100%; padding: 0; }
@@ -799,7 +959,12 @@
   <!-- 一、现有系统改造升级 -->
   <div class="section">
     <div class="section-title"><span class="num">一</span>现有系统改造升级</div>
-    <p class="section-desc">本阶段目标是完成现有系统与同花顺渠道的适配改造，为后续开户系统对接奠定基础。<span style="background:var(--primary-light);color:var(--primary);padding:3px 12px;border-radius:12px;font-size:12px;margin-left:8px;">同花顺开户系统上线前</span></p>
+    <p class="section-desc" style="margin-bottom:8px;">本阶段目标是完成现有系统与同花顺渠道的适配改造，为后续开户系统对接奠定基础。<span style="background:var(--primary-light);color:var(--primary);padding:3px 12px;border-radius:12px;font-size:12px;margin-left:8px;">同花顺开户系统上线前</span></p>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;padding:8px 14px;background:#f0f4ff;border-radius:8px;border:1px solid #dbeafe;">
+        <span style="font-size:12px;font-weight:600;color:#1e40af;margin-right:4px;">参与部门：</span>
+        <span style="font-size:12px;color:#374151;background:#fff;padding:2px 10px;border-radius:12px;border:1px solid #bfdbfe;">信息技术部（吕娜）</span>
+        <span style="font-size:12px;color:#374151;background:#fff;padding:2px 10px;border-radius:12px;border:1px solid #bfdbfe;">财富管理部（张嘉妮）</span>
+      </div>
 
     <!-- 1.1 -->
     <div class="subsection">
@@ -900,13 +1065,22 @@
       <div class="field"><span class="field-label">技术要点</span><span class="field-value">新客理财产品设计、产品上架与分配逻辑、APP端领取入口开发、断点客户定向营销机制</span></div>
       <div class="field"><span class="field-label">排期</span><span class="field-value">由财富管理部与自营条线协调产品排期，信息技术部技术评估后给出上线排期</span></div>
       <div class="field"><span class="field-label">交付物</span><span class="field-value">新客理财产品方案、APP领取功能、断点客户营销SOP</span></div>
+      <div class="biz-card" style="margin-top:12px;">
+        <p>对接部门</p>
+        <p>产品部（产品设计与推动）</p>
+      </div>
     </div>
   </div>
 
   <!-- 二、同花顺开户系统建设（参照Excel项目排期表） -->
   <div class="section">
     <div class="section-title"><span class="num">二</span>同花顺开户系统建设</div>
-    <p class="section-desc">按照产品研发全生命周期划分为前置商务阶段和四个子阶段。<strong>整体周期9周</strong>，由同花顺开发方与国都证券各业务部门协同推进。<br>网厅H5功能对接与开户系统建设<strong>同步并行推进</strong>，由财富管理部牵头立项，信息技术部与同花顺开发团队共同实现。</p>
+    <p class="section-desc" style="margin-bottom:8px;">按照产品研发全生命周期划分为前置商务阶段和四个子阶段。<strong>整体周期9周</strong>，由同花顺开发方与国都证券各业务部门协同推进。<br>网厅H5功能对接与开户系统建设<strong>同步并行推进</strong>，由财富管理部牵头立项，信息技术部与同花顺开发团队共同实现。</p>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;padding:8px 14px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe;">
+      <span style="font-size:12px;font-weight:600;color:#1e40af;margin-right:4px;">责任部门：</span>
+      <span style="font-size:12px;color:#374151;background:#fff;padding:2px 10px;border-radius:12px;border:1px solid #bfdbfe;">同花顺（石文杰）</span>
+      <span style="font-size:12px;color:#374151;background:#fff;padding:2px 10px;border-radius:12px;border:1px solid #bfdbfe;">信息技术部（吕娜）</span>
+    </div>
 
     <!-- 前置：单一来源采购和商务谈判 -->
     <div class="phase-group">
@@ -922,7 +1096,7 @@
           <li>采购审批流程流转</li>
           <li>采购合同法务审核</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>信息技术部（项目经理：吕娜）、运营管理部（吴若吟）<br><strong>输出物：</strong>《单一来源采购审批单》《采购合同》</div>
+        <div class="ms-output"><strong>责任部门：</strong>信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《单一来源采购审批单》《采购合同》</div>
       </div>
 
       <div class="ms-card" style="border-left-color:var(--accent);">
@@ -954,7 +1128,7 @@
           <li>实施计划确认</li>
           <li>双方职责确认</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）、创新金融部（周欣）、财富管理部（张嘉妮）、运营管理部（吴若吟）<br><strong>输出物：</strong>《项目计划排期》《会议纪要》</div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《项目计划排期》《会议纪要》</div>
       </div>
 
       <div class="ms-card">
@@ -966,7 +1140,7 @@
           <li>收集业务规则</li>
           <li>补充需求沟通</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）、创新金融部（周欣）、财富管理部（张嘉妮）、运营管理部（吴若吟）<br><strong>输出物：</strong>《补充需求清单》《业务规则清单》</div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《补充需求清单》《业务规则清单》</div>
       </div>
 
       <div class="ms-card">
@@ -979,7 +1153,7 @@
           <li>页面原型确认</li>
           <li>交互细节确认</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）、创新金融部（周欣）、财富管理部（张嘉妮）<br><strong>输出物：</strong>《UI确认稿》《原型确认稿》</div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《UI确认稿》《原型确认稿》</div>
       </div>
 
       <div class="ms-card">
@@ -992,7 +1166,7 @@
           <li>确认业务流程</li>
           <li>确认硬件资源需求</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）、创新金融部（周欣）、财富管理部（张嘉妮）<br><strong>输出物：</strong>《需求文档确认稿》《硬件清单》</div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《需求文档确认稿》《硬件清单》</div>
       </div>
     </div>
 
@@ -1022,7 +1196,7 @@
           <li>数据库准备（支持 OceanBase / TDSQL / TiDB）</li>
           <li>信创中间件安装（麒麟 V10 / openEuler）</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>信息技术部（运维：杨炯）<br><strong>输出物：</strong>《环境部署清单》</div>
+        <div class="ms-output"><strong>责任部门：</strong>信息技术部<br><strong>输出物：</strong>《环境部署清单》</div>
       </div>
 
       <div class="ms-card">
@@ -1034,7 +1208,7 @@
           <li>测试环境发布</li>
           <li>测试数据准备</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>信息技术部（运维：杨炯）<br><strong>输出物：</strong>《测试环境部署报告》</div>
+        <div class="ms-output"><strong>责任部门：</strong>信息技术部<br><strong>输出物：</strong>《测试环境部署报告》</div>
       </div>
 
       <div class="ms-card">
@@ -1116,10 +1290,10 @@
         </div>
         <div class="ms-detail">
           <li>业务验证（创新金融部：周欣、财富管理部：张嘉妮；杭州环城北路营业部：单/双向视频见证测试）</li>
-          <li>合规审查（运营管理部：吴若吟 - 开户全流程、风测选项、协议签署）</li>
+          <li>合规审查（运营管理部 - 开户全流程、风测选项、协议签署）</li>
           <li>回归测试</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>创新金融部（周欣）、财富管理部（张嘉妮）、运营管理部（吴若吟）、杭州环城北路营业部<br><strong>输出物：</strong>《回归测试报告 V2》</div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《回归测试报告 V2》</div>
       </div>
 
       <div class="ms-card">
@@ -1131,7 +1305,7 @@
           <li>高优先级问题修复 → 开户系统 V1.4.2</li>
           <li>用户验收测试（UAT）</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>同花顺（开发负责人）、创新金融部（周欣）、财富管理部（张嘉妮）、运营管理部（吴若吟）<br><strong>输出物：</strong>《UAT验收报告》</div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（开发负责人）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《UAT验收报告》</div>
       </div>
     </div>
 
@@ -1148,7 +1322,7 @@
           <li>上线条件确认</li>
           <li>回滚方案确认</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>项目经理（吕娜）、全体相关方<br><strong>输出物：</strong>《上线评审纪要》</div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《上线评审纪要》</div>
       </div>
 
       <div class="ms-card">
@@ -1161,7 +1335,7 @@
           <li>参数配置</li>
           <li>系统验证</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>信息技术部（运维：杨炯）<br><strong>输出物：</strong>《生产部署报告》</div>
+        <div class="ms-output"><strong>责任部门：</strong>信息技术部<br><strong>输出物：</strong>《生产部署报告》</div>
       </div>
 
       <div class="ms-card">
@@ -1171,9 +1345,9 @@
         </div>
         <div class="ms-detail">
           <li>生产冒烟测试</li>
-          <li>业务验证（运营管理部：吴若吟复检；创新金融部：周欣、财富管理部：张嘉妮；杭州环城北路营业部视频验证）</li>
+          <li>业务验证（运营管理部复检；创新金融部：周欣、财富管理部：张嘉妮；杭州环城北路营业部视频验证）</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、运营管理部（吴若吟）、创新金融部（周欣）、财富管理部（张嘉妮）<br><strong>输出物：</strong>《生产验收报告》</div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《生产验收报告》</div>
       </div>
 
       <div class="ms-card">
@@ -1185,7 +1359,7 @@
           <li>小流量 AB 测试验证</li>
           <li>监控观察</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>项目经理（吕娜）<br><strong>输出物：</strong>《灰度运行报告》</div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《灰度运行报告》</div>
       </div>
 
       <div class="ms-card">
@@ -1196,7 +1370,7 @@
         <div class="ms-detail">
           <li>同花顺渠道全量开放</li>
         </div>
-        <div class="ms-output"><strong>责任部门：</strong>项目经理（吕娜）、全体相关方<br><strong>输出物：</strong>《上线总结报告》</div>
+        <div class="ms-output"><strong>责任部门：</strong>同花顺（石文杰）、信息技术部（项目经理：吕娜）<br><strong>输出物：</strong>《上线总结报告》</div>
       </div>
 
       <div class="ms-card">
@@ -1231,7 +1405,7 @@
   <!-- 三、上线后运营 -->
   <div class="section">
     <div class="section-title"><span class="num">三</span>同花顺开户系统上线后运营</div>
-    <p class="section-desc">本阶段聚焦数据监控与运营增长，确保持续产出。</p>
+    <p class="section-desc" style="margin-bottom:8px;">本阶段聚焦数据监控与运营增长，确保持续产出。</p>
 
     <div class="subsection">
       <div class="subsection-title">3.1 数据跟踪与运营优化</div>
@@ -1266,7 +1440,7 @@
     <div class="subsection">
       <div class="subsection-title">3.2 增值提佣开发与上线 <span class="time-tag">与开户系统同步启动</span></div>
       <div class="field"><span class="field-label">功能描述</span><span class="field-value">完成同花顺渠道增值提佣功能的技术开发与业务上线，实现客户增值服务费用的计提与管理，提升渠道收入贡献。本项目与开户系统同步启动，计划 8 周（第1–8周）内完成。</span></div>
-      <div class="field"><span class="field-label">负责团队</span><span class="field-value">同花顺（许敖）开发团队、信息技术部（王卫炎）、创新金融部（周欣）</span></div>
+      <div class="field"><span class="field-label">负责团队</span><span class="field-value">同花顺（许敖）开发团队、信息技术部（王卫炎）、创新金融部（周欣）、财富管理部（井淼<span style="color:#f59e0b;font-size:11px;margin-left:2px;"> 待确认</span>）</span></div>
 
       <div class="biz-card">
         <p>商务洽谈</p>
@@ -1391,25 +1565,25 @@
 <tr>            <td>3</td><td style="text-align:left"><span class="badge-legacy">改造</span>1.3 信息补充页折叠层</td><td>信息技术部</td>            <td colspan="20"><span class="bar-pending">待排期</span></td>          </tr>          
 <tr>            <td>4</td><td style="text-align:left"><span class="badge-legacy">改造</span>1.4 开户断点企微推送</td><td>信息技术部 / 创新金融部</td>            <td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td>            <td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td><td><span class="bar bar-purple">推送</span></td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>5</td><td style="text-align:left"><span class="badge-legacy">改造</span>1.5 产品抓手建设</td><td>财富管理部 / 创新金融部 / 自营条线</td>            <td colspan="20"><span class="bar-pending">待排期</span></td>          </tr>          <tr class="section-row track-main"><td></td><td colspan="21">🚀 二、同花顺开户系统建设<span class="gantt-time time-main">⏱ W1-W9</span></td></tr>          <tr class="section-row track-sub"><td></td><td colspan="21">  ▸ 前置：单一来源采购与商务谈判<span class="gantt-time time-main">⏱ W1</span></td></tr>          
-<tr>            <td>6</td><td style="text-align:left"><span class="badge-main">主</span>M1 单一来源采购审批</td><td>信息技术部(吕娜)/运营管理部(吴若吟)</td>            <td><span class="bar bar-amber">采购</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>6</td><td style="text-align:left"><span class="badge-main">主</span>M1 单一来源采购审批</td><td>信息技术部(吕娜)/运营管理部</td>            <td><span class="bar bar-amber">采购</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>7</td><td style="text-align:left"><span class="badge-main">主</span>M2 商务谈判与签约</td><td>同花顺(石文杰)/信息技术部(吕娜)</td>            <td><span class="bar bar-amber">商务</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          <tr class="section-row track-sub"><td></td><td colspan="21">  ▸ 2.1 项目启动与需求<span class="gantt-time time-main">⏱ W2-W3</span></td></tr>          
-<tr>            <td>8</td><td style="text-align:left"><span class="badge-main">主</span>M3 项目动员会</td><td>同花顺(石文杰)/信息技术部(吕娜)/创新金融部(周欣),财富管理部(张嘉妮)/运营管理部(吴若吟)</td>            <td></td><td><span class="bar bar-blue">启动</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
-<tr>            <td>9</td><td style="text-align:left"><span class="badge-main">主</span>M4 需求沟通</td><td>同花顺(石文杰)/信息技术部(吕娜)/创新金融部(周欣),财富管理部(张嘉妮)/运营管理部(吴若吟)</td>            <td></td><td><span class="bar-progress">进行中</span></td><td><span class="bar bar-blue">需求</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>8</td><td style="text-align:left"><span class="badge-main">主</span>M3 项目动员会</td><td>同花顺(石文杰)/信息技术部(吕娜)/创新金融部(周欣),财富管理部(张嘉妮)/运营管理部</td>            <td></td><td><span class="bar bar-blue">启动</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>9</td><td style="text-align:left"><span class="badge-main">主</span>M4 需求沟通</td><td>同花顺(石文杰)/信息技术部(吕娜)/创新金融部(周欣),财富管理部(张嘉妮)/运营管理部</td>            <td></td><td><span class="bar-progress">进行中</span></td><td><span class="bar bar-blue">需求</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>10</td><td style="text-align:left"><span class="badge-main">主</span>M5 UI/交互确认</td><td>同花顺(石文杰)/信息技术部(吕娜)/创新金融部(周欣),财富管理部(张嘉妮)</td>            <td></td><td></td><td><span class="bar bar-blue">UI</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>11</td><td style="text-align:left"><span class="badge-main">主</span>M6 需求确认</td><td>同花顺(石文杰)/信息技术部(吕娜)/创新金融部(周欣),财富管理部(张嘉妮)</td>            <td></td><td></td><td><span class="bar bar-blue">确认</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          <tr class="section-row track-sub"><td></td><td colspan="21">  ▸ 2.2 设计与开发<span class="gantt-time time-main">⏱ W4-W5</span></td></tr>          
 <tr>            <td>12</td><td style="text-align:left"><span class="badge-main">主</span>M7 技术方案设计</td><td>同花顺(技术负责人)/信息技术部(吕娜)</td>            <td></td><td></td><td></td><td><span class="bar bar-blue">设计</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
-<tr>            <td>13</td><td style="text-align:left"><span class="badge-main">主</span>M8 环境准备</td><td>信息技术部(运维：杨炯)</td>            <td></td><td></td><td></td><td><span class="bar bar-blue">环境</span></td><td><span class="bar bar-blue">环境</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
-<tr>            <td>14</td><td style="text-align:left"><span class="badge-main">主</span>M9 测试环境部署</td><td>信息技术部(运维：杨炯)</td>            <td></td><td></td><td></td><td></td><td><span class="bar bar-blue">部署</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>13</td><td style="text-align:left"><span class="badge-main">主</span>M8 环境准备</td><td>信息技术部</td>            <td></td><td></td><td></td><td><span class="bar bar-blue">环境</span></td><td><span class="bar bar-blue">环境</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>14</td><td style="text-align:left"><span class="badge-main">主</span>M9 测试环境部署</td><td>信息技术部</td>            <td></td><td></td><td></td><td></td><td><span class="bar bar-blue">部署</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>15</td><td style="text-align:left"><span class="badge-main">主</span>M10 功能开发</td><td>同花顺(开发负责人)/信息技术部(吕娜)</td>            <td></td><td></td><td></td><td><span class="bar bar-blue">开发</span></td><td><span class="bar bar-blue">开发</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          <tr class="section-row track-sub"><td></td><td colspan="21">  ▸ 2.3 测试与修复<span class="gantt-time time-main">⏱ W6-W7</span></td></tr>          
 <tr>            <td>16</td><td style="text-align:left"><span class="badge-main">主</span>M11 第三方系统联调</td><td>同花顺(技术负责人)/信息技术部(吕娜)</td>            <td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">联调</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>17</td><td style="text-align:left"><span class="badge-main">主</span>M12 同花顺一轮测试</td><td>同花顺(测试负责人)/信息技术部(吕娜)</td>            <td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">测试</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>18</td><td style="text-align:left"><span class="badge-main">主</span>M13 缺陷修复（第一轮）</td><td>同花顺（开发负责人）</td>            <td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">修复</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>19</td><td style="text-align:left"><span class="badge-main">主</span>M14 提交国都测试</td><td>同花顺(石文杰)/信息技术部(吕娜)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">提测</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
-<tr>            <td>20</td><td style="text-align:left"><span class="badge-main">主</span>M15 券商一轮 & 同花顺二轮</td><td>创新金融部(周欣),财富管理部(张嘉妮)/运营管理部(吴若吟)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">验证</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
-<tr>            <td>21</td><td style="text-align:left"><span class="badge-main">主</span>M16 缺陷修复（第二轮）+ UAT</td><td>同花顺(开发)/创新金融部(周欣),财富管理部(张嘉妮)/运营管理部(吴若吟)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">UAT</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          <tr class="section-row track-sub"><td></td><td colspan="21">  ▸ 2.4 上线与总结<span class="gantt-time time-main">⏱ W8-W9</span></td></tr>          
+<tr>            <td>20</td><td style="text-align:left"><span class="badge-main">主</span>M15 券商一轮 & 同花顺二轮</td><td>创新金融部(周欣),财富管理部(张嘉妮)/运营管理部</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">验证</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>21</td><td style="text-align:left"><span class="badge-main">主</span>M16 缺陷修复（第二轮）+ UAT</td><td>同花顺(开发)/创新金融部(周欣),财富管理部(张嘉妮)/运营管理部</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">UAT</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          <tr class="section-row track-sub"><td></td><td colspan="21">  ▸ 2.4 上线与总结<span class="gantt-time time-main">⏱ W8-W9</span></td></tr>          
 <tr>            <td>22</td><td style="text-align:left"><span class="badge-main">主</span>M17 上线评审会</td><td>项目经理(吕娜)/全体相关方</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">评审</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
-<tr>            <td>23</td><td style="text-align:left"><span class="badge-main">主</span>M18 生产环境部署</td><td>信息技术部(运维：杨炯)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">部署</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
-<tr>            <td>24</td><td style="text-align:left"><span class="badge-main">主</span>M19 生产环境验收</td><td>同花顺(石文杰)/运营管理部(吴若吟)/创新金融部(周欣),财富管理部(张嘉妮)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">验收</span></td><td><span class="bar bar-blue">验收</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>23</td><td style="text-align:left"><span class="badge-main">主</span>M18 生产环境部署</td><td>信息技术部</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">部署</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
+<tr>            <td>24</td><td style="text-align:left"><span class="badge-main">主</span>M19 生产环境验收</td><td>同花顺(石文杰)/运营管理部/创新金融部(周欣),财富管理部(张嘉妮)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">验收</span></td><td><span class="bar bar-blue">验收</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>25</td><td style="text-align:left"><span class="badge-main">主</span>M20 灰度上线</td><td>项目经理(吕娜)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">灰度</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>26</td><td style="text-align:left"><span class="badge-main">主</span>M21 正式上线</td><td>项目经理(吕娜)/全体相关方</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">上线</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>27</td><td style="text-align:left"><span class="badge-main">主</span>M22 项目总结</td><td>信息技术部(吕娜)/同花顺(石文杰)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-blue">总结</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          <tr class="section-row track-operate"><td></td><td colspan="21">📊 三、上线后运营<span class="gantt-time time-operate">⏱ 正式上线后</span></td></tr>          
@@ -1427,6 +1601,192 @@
 <tr>            <td>39</td><td style="text-align:left"><span class="parallel-badge">并行</span>M9 生产环境部署</td><td>信息技术部(王卫炎)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-orange">部署</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>          
 <tr>            <td>40</td><td style="text-align:left"><span class="parallel-badge">并行</span>M10 生产环境验证</td><td>同花顺（许敖）/ 创新金融部(周欣)</td>            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="bar bar-orange">验证</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>          </tr>        </tbody>
       </table>
+    </div>
+  </div>
+
+  <!-- 流量对比图：慢方案 vs 快方案 -->
+  <div class="section">
+    <div class="section-title"><span class="num">流</span>项目进度与开户流量三种情景对比</div>
+    <p class="section-desc">横向时间轴对比三种情景下的周开户量：<strong>情况一</strong>（不上系统+不优化）仅<strong>3户/周</strong>；<strong>情况二</strong>（不上系统+优化流程关键点）<strong>20户/周</strong>；<strong>情况三</strong>（上线系统+专项活动）爆发至<strong>300户/周</strong>。差距高达<strong style="color:#dc2626;">15倍→100倍</strong>！</p>
+
+    <div class="flow-section">
+      <div class="flow-chart" style="padding:20px 24px 24px;background:linear-gradient(180deg,#fff 0%,#f8fafc 100%);">
+
+        <!-- 图例 + 紧迫性标语 -->
+        <div style="display:flex;gap:20px;margin-bottom:16px;flex-wrap:wrap;align-items:center;">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280;">
+            <span style="display:inline-block;width:24px;height:3px;border-radius:2px;background:#9ca3af;"></span>
+            情况一：不上系统+不优化
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280;">
+            <span style="display:inline-block;width:24px;height:3px;border-radius:2px;background:#f59e0b;"></span>
+            情况二：不上系统+优化流程
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280;">
+            <span style="display:inline-block;width:24px;height:3px;border-radius:2px;background:#2563eb;"></span>
+            情况三：上线系统+专项活动
+          </div>
+          <div style="margin-left:auto;padding:4px 14px;background:#fee2e2;border-radius:20px;border:1px solid #fca5a5;font-size:11px;font-weight:700;color:#dc2626;animation:pulse 1.5s infinite;">
+            &#9888; 错失窗口期 = 流失百倍流量！
+          </div>
+        </div>
+        <style>@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.7; } }</style>
+
+        <!-- 主图区 -->
+        <div style="position:relative;height:300px;border-bottom:2px solid #374151;border-left:2px solid #374151;padding:0 0 0 40px;margin-left:10px;">
+
+          <!-- Y轴刻度 -->
+          <div style="position:absolute;left:-38px;bottom:0;display:flex;flex-direction:column;justify-content:space-between;height:100%;font-size:10px;color:#6b7280;text-align:right;padding-bottom:2px;font-weight:600;">
+            <span style="color:#dc2626;font-weight:800;">300</span>
+            <span>150</span>
+            <span>50</span>
+            <span>20</span>
+            <span>10</span>
+            <span style="color:#9ca3af;">0</span>
+          </div>
+
+          <!-- Y轴网格线 -->
+          <div style="position:absolute;left:0;bottom:0;width:100%;height:100%;pointer-events:none;">
+            <div style="border-top:1px dashed #e5e7eb;position:absolute;bottom:0%;width:100%;"></div>
+            <div style="border-top:1px dashed #e5e7eb;position:absolute;bottom:3.3%;width:100%;"></div>
+            <div style="border-top:1px dashed #e5e7eb;position:absolute;bottom:6.7%;width:100%;"></div>
+            <div style="border-top:1px dashed #e5e7eb;position:absolute;bottom:16.7%;width:100%;"></div>
+            <div style="border-top:1px dashed #e5e7eb;position:absolute;bottom:50%;width:100%;"></div>
+            <!-- 300线高亮 -->
+            <div style="border-top:2px solid #fca5a5;position:absolute;bottom:98.3%;width:100%;"></div>
+          </div>
+
+          <!-- 时间轴 -->
+          <div style="position:absolute;left:0;bottom:-28px;width:100%;display:flex;justify-content:space-between;font-size:10px;color:#6b7280;padding-right:10px;font-weight:600;">
+            <span>当前</span><span>第2周</span><span>第4周</span><span>第6周</span><span>第8周</span><span>第10周</span><span>第12周</span>
+          </div>
+
+          <!-- 阶段标注 -->
+          <div style="position:absolute;left:0;bottom:-48px;width:100%;display:flex;font-size:9px;color:#9ca3af;">
+            <span style="flex:1;text-align:center;">现状</span>
+            <span style="flex:2;text-align:center;color:#6b7280;font-weight:600;">流程优化实施期</span>
+            <span style="flex:2;text-align:center;color:#3b82f6;font-weight:700;text-shadow:0 0 4px rgba(59,130,246,0.3);">&#9654; 系统建设</span>
+            <span style="flex:1;text-align:center;color:#d97706;font-weight:700;">灰度</span>
+            <span style="flex:1;text-align:center;color:#059669;font-weight:700;">上线</span>
+            <span style="flex:1.5;text-align:center;color:#dc2626;font-weight:800;">&#9733; 专项活动</span>
+          </div>
+
+          <!-- SVG三条线 - 使用贝塞尔曲线制造轻微波动 -->
+          <svg style="position:absolute;left:0;bottom:0;width:100%;height:100%;overflow:visible;" viewBox="0 0 1000 300" preserveAspectRatio="none">
+
+            <!-- ====== 情况一：灰色虚线 - 始终3户（带微小波动）====== -->
+            <path d="M 0,290 C 40,286 80,292 120,288 C 160,284 200,292 240,287 C 280,283 320,291 360,286 C 400,282 440,290 480,285 C 520,281 560,289 600,284 C 640,280 680,288 720,283 C 760,279 800,287 840,282 C 880,278 920,286 960,281 C 980,279 990,280 1000,282"
+                  fill="none" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5" stroke-linecap="round"/>
+            <circle cx="0" cy="290" r="4" fill="#9ca3af" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="1000" cy="282" r="4" fill="#9ca3af" stroke="#fff" stroke-width="1.5"/>
+            <text x="0" y="276" fill="#9ca3af" font-size="10" font-weight="700" text-anchor="middle">3户</text>
+            <text x="870" y="274" fill="#9ca3af" font-size="11" font-weight="700" text-anchor="start">始终徘徊在3户/周</text>
+
+            <!-- ====== 情况二：琥珀色线 - 3→20（流程优化，带波动）====== -->
+            <defs>
+              <linearGradient id="grad2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.01"/>
+              </linearGradient>
+            </defs>
+            <path d="M 0,290 C 50,288 100,286 150,284 C 200,270 250,262 300,255 C 333,250 366,248 400,246 C 500,242 600,240 700,238 C 800,236 900,234 1000,233"
+                  fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 0,290 C 50,288 100,286 150,284 C 200,270 250,262 300,255 C 333,250 366,248 400,246 C 500,242 600,240 700,238 C 800,236 900,234 1000,233 L 1000,300 L 0,300 Z"
+                  fill="url(#grad2)"/>
+            <circle cx="0" cy="290" r="4" fill="#f59e0b" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="300" cy="255" r="5" fill="#f59e0b" stroke="#fff" stroke-width="2"/>
+            <circle cx="1000" cy="233" r="5" fill="#f59e0b" stroke="#fff" stroke-width="2"/>
+            <text x="300" y="244" fill="#f59e0b" font-size="11" font-weight="800" text-anchor="middle">20户</text>
+            <text x="830" y="226" fill="#f59e0b" font-size="11" font-weight="700" text-anchor="start">最多20户/周，瓶颈明显</text>
+
+            <!-- ====== 情况三：蓝色粗线 - 3→50→150→300（强势上扬，带波动）====== -->
+            <defs>
+              <linearGradient id="grad3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2563eb" stop-opacity="0.25"/>
+                <stop offset="30%" stop-color="#2563eb" stop-opacity="0.08"/>
+                <stop offset="100%" stop-color="#2563eb" stop-opacity="0.01"/>
+              </linearGradient>
+            </defs>
+            <path d="M 0,290 C 50,288 100,286 150,285 C 200,283 250,280 300,278 C 350,275 400,268 450,246 C 480,235 500,222 520,200 C 550,162 580,120 620,80 C 660,50 700,30 750,18 C 800,10 850,6 900,5 C 950,4 980,4 1000,5"
+                   fill="none" stroke="#2563eb" stroke-width="3.5" stroke-linecap="round" style="filter:drop-shadow(0 2px 4px rgba(37,99,235,0.4));"/>
+             <path d="M 0,290 C 50,288 100,286 150,285 C 200,283 250,280 300,278 C 350,275 400,268 450,246 C 480,235 500,222 520,200 C 550,162 580,120 620,80 C 660,50 700,30 750,18 C 800,10 850,6 900,5 C 950,4 980,4 1000,5 L 1000,300 L 0,300 Z"
+                  fill="url(#grad3)"/>
+            <!-- 数据点 -->
+            <circle cx="0" cy="290" r="4" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="300" cy="278" r="4" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="450" cy="246" r="6" fill="#d97706" stroke="#fff" stroke-width="2.5" style="filter:drop-shadow(0 0 4px rgba(217,119,6,0.6));"/>
+            <circle cx="620" cy="80" r="7" fill="#059669" stroke="#fff" stroke-width="2.5" style="filter:drop-shadow(0 0 4px rgba(5,150,99,0.6));"/>
+            <circle cx="1000" cy="5" r="8" fill="#dc2626" stroke="#fff" stroke-width="3" style="filter:drop-shadow(0 0 6px rgba(220,38,38,0.6));"/>
+            <!-- 数值标注 -->
+            <text x="0" y="278" fill="#2563eb" font-size="10" font-weight="700" text-anchor="middle">3户</text>
+            <text x="450" y="234" fill="#d97706" font-size="12" font-weight="800" text-anchor="middle">20户</text>
+            <text x="620" y="68" fill="#059669" font-size="12" font-weight="800" text-anchor="middle">150户</text>
+            <text x="1000" y="0" fill="#dc2626" font-size="14" font-weight="900" text-anchor="middle">300户 &#9650;</text>
+
+            <!-- 关键事件标注（带警示感） -->
+            <!-- 流程优化 -->
+            <rect x="235" y="210" width="100" height="32" rx="6" fill="#fffbeb" stroke="#f59e0b" stroke-width="1" opacity="0.9"/>
+            <text x="285" y="230" fill="#d97706" font-size="9" font-weight="700" text-anchor="middle">现有流程优化</text>
+            <line x1="285" y1="242" x2="300" y2="255" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3,2"/>
+
+            <!-- 灰度上线 -->
+            <rect x="400" y="195" width="90" height="28" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.2" opacity="0.9"/>
+            <text x="445" y="213" fill="#d97706" font-size="10" font-weight="800" text-anchor="middle">&#9660; 灰度上线</text>
+            <line x1="445" y1="223" x2="450" y2="242" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- 正式上线 -->
+            <rect x="565" y="40" width="90" height="28" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="1.2" opacity="0.9"/>
+            <text x="610" y="58" fill="#059669" font-size="10" font-weight="800" text-anchor="middle">&#9650; 正式上线</text>
+            <line x1="610" y1="68" x2="620" y2="76" stroke="#059669" stroke-width="1.5"/>
+
+            <!-- 专项活动 大标签 -->
+            <rect x="810" y="80" width="140" height="34" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="2" opacity="0.95" style="filter:drop-shadow(0 2px 8px rgba(239,68,68,0.3));"/>
+            <text x="880" y="101" fill="#dc2626" font-size="11" font-weight="900" text-anchor="middle">&#9888; 专项活动运营</text>
+            <line x1="880" y1="114" x2="920" y2="20" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+            <!-- 差异对比区域 - 从第6周开始的差距 -->
+            <rect x="480" y="100" width="520" height="200" fill="url(#warningGrad)" opacity="0.08" rx="4"/>
+            <defs>
+              <linearGradient id="warningGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ef4444"/>
+                <stop offset="100%" stop-color="#ef4444"/>
+              </linearGradient>
+            </defs>
+
+            <!-- 差距标注 -->
+            <rect x="580" y="110" width="340" height="55" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" style="filter:drop-shadow(0 2px 6px rgba(239,68,68,0.2));"/>
+            <text x="750" y="132" fill="#dc2626" font-size="13" font-weight="900" text-anchor="middle">&#9888; 巨大流量差距</text>
+            <text x="750" y="152" fill="#dc2626" font-size="11" font-weight="700" text-anchor="middle">情况二仅20户 vs 情况三高达300户</text>
+            <text x="750" y="168" fill="#b91c1c" font-size="10" font-weight="700" text-anchor="middle">不上系统 = 损失95%的潜在客户！</text>
+
+            <!-- 右边界限警示线 -->
+            <line x1="990" y1="0" x2="990" y2="300" stroke="#fca5a5" stroke-width="2" stroke-dasharray="4,6" opacity="0.5"/>
+
+          </svg>
+
+        </div>
+
+        <!-- 底部说明 - 卡片式布局更亮眼 -->
+        <div style="margin-top:56px;display:flex;gap:12px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:160px;padding:10px 14px;border-radius:8px;border-left:4px solid #9ca3af;background:#f9fafb;">
+            <div style="font-size:11px;color:#9ca3af;font-weight:600;">&#9679; 情况一</div>
+            <div style="font-size:13px;font-weight:700;color:#374151;margin:2px 0;">3户<span style="font-size:10px;font-weight:400;color:#9ca3af;">/周</span></div>
+            <div style="font-size:10px;color:#6b7280;">不上系统、不优化</div>
+          </div>
+          <div style="flex:1;min-width:160px;padding:10px 14px;border-radius:8px;border-left:4px solid #f59e0b;background:#fffbeb;">
+            <div style="font-size:11px;color:#d97706;font-weight:600;">&#9679; 情况二</div>
+            <div style="font-size:13px;font-weight:700;color:#374151;margin:2px 0;">20户<span style="font-size:10px;font-weight:400;color:#9ca3af;">/周</span></div>
+            <div style="font-size:10px;color:#6b7280;">不上系统、优化流程</div>
+          </div>
+          <div style="flex:1.5;min-width:180px;padding:10px 14px;border-radius:8px;border-left:4px solid #2563eb;background:#eff6ff;position:relative;overflow:hidden;">
+            <div style="position:absolute;top:0;right:0;padding:2px 10px;background:#dc2626;color:#fff;font-size:9px;font-weight:700;border-radius:0 8px 0 8px;">推荐</div>
+            <div style="font-size:11px;color:#2563eb;font-weight:600;">&#9679; 情况三</div>
+            <div style="font-size:15px;font-weight:800;color:#dc2626;margin:2px 0;">300户<span style="font-size:10px;font-weight:400;color:#9ca3af;">/周</span></div>
+            <div style="font-size:10px;color:#6b7280;">上线系统 + 专项活动</div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
