@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -896,12 +896,115 @@
     flex-shrink: 0;
   }
 
+  /* ───────────── 打印优化 ───────────── */
+  @page {
+    size: A4;
+    margin: 12mm 10mm;
+  }
   @media print {
-    body { background: #fff; }
-    .container { max-width: 100%; padding: 0; }
-    .section { box-shadow: none; break-inside: avoid; }
-    .report-cover { background: #1d4ed8 !important; -webkit-print-color-adjust: exact; }
-    .ms-card { break-inside: avoid; }
+    html, body {
+      background: #fff !important;
+      font-size: 11pt;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+    .container {
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    /* 封面强制整色 */
+    .report-cover {
+      background: #1d4ed8 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      break-after: page;
+      padding: 80px 40px !important;
+    }
+
+    /* 每个 section 独立成块，避免中部断裂 */
+    .section {
+      box-shadow: none !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      padding: 18px 22px !important;
+      margin-bottom: 14px !important;
+    }
+    .subsection {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .ms-card,
+    .compare-card,
+    .embed-card,
+    .biz-card,
+    .flow-section,
+    .toc {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* 目录单独一页 */
+    .toc { break-after: page; page-break-after: always; }
+
+    /* 甘特图：横向铺满，避免横向滚动被截断 */
+    .gantt-wrap {
+      overflow: visible !important;
+      border: none !important;
+      box-shadow: none !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .gantt-table {
+      min-width: 0 !important;
+      width: 100% !important;
+      font-size: 8pt !important;
+    }
+    .gantt-table th, .gantt-table td {
+      padding: 4px 3px !important;
+    }
+    .gantt-table .th-name { min-width: 120px !important; }
+    .gantt-table .th-dept { min-width: 90px !important; }
+
+    /* iframe 原型：打印浏览器默认不渲染 iframe 内容，
+       用一个占位提示替代，避免大面积空白 */
+    .embed-iframe {
+      height: 600px !important;
+      border: 1px solid #ccc !important;
+      background: #fff !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    /* SVG 流量图确保完整显示 */
+    .flow-section svg {
+      max-width: 100% !important;
+      height: auto !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* 隐藏交互按钮等不需要打印的元素 */
+    .footer, .back-btn, .next-btn, .picker-mask, .picker-sheet, .toast {
+      display: none !important;
+    }
+
+    /* 图片避免被切断 */
+    img { max-width: 100% !important; break-inside: avoid; }
+
+    /* 表头深色背景强制打印 */
+    .gantt-table thead th,
+    .gantt-table .section-row td,
+    .gantt-table .track-legacy td,
+    .gantt-table .track-main td,
+    .gantt-table .track-sub td,
+    .gantt-table .track-operate td,
+    .gantt-table .track-parallel td {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
   }
 </style>
 </head>
@@ -1821,6 +1924,80 @@
   <p class="footer">以上为国都开户系统升级项目整体计划，各阶段具体排期待相关部门确认后细化。</p>
 
 </div>
+
+<!-- 打印样式：iframe 内联渲染容器 -->
+<style>
+  .iframe-print-inline {
+    display: none;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    background: #F3F2F7;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #333;
+  }
+  @media print {
+    .iframe-print-inline { display: block !important; }
+    .embed-iframe { display: none !important; }
+  }
+</style>
+
+<script>
+(function () {
+  // 打印前将 iframe 内容内联到父文档，解决 iframe 打印空白问题
+  function inlineIframeForPrint() {
+    var iframes = document.querySelectorAll('iframe.embed-iframe');
+    iframes.forEach(function (iframe) {
+      var placeholder = document.createElement('div');
+      placeholder.className = 'iframe-print-inline';
+      try {
+        var doc = iframe.contentDocument || iframe.contentWindow.document;
+        if (doc && doc.body) {
+          // 克隆 iframe 的 body 内容
+          placeholder.innerHTML = doc.body.innerHTML;
+          // 把 iframe 内部的 style 也带过来
+          var headStyles = doc.querySelectorAll('style');
+          var styleText = '';
+          headStyles.forEach(function (s) { styleText += s.innerHTML; });
+          if (styleText) {
+            var st = document.createElement('style');
+            st.textContent = styleText;
+            placeholder.insertBefore(st, placeholder.firstChild);
+          }
+        }
+      } catch (e) {
+        // 跨域或本地文件限制，无法读取时显示占位
+        placeholder.innerHTML = '<div style="padding:40px;text-align:center;color:#888;font-size:14px;">原型内容详见 newinfo.html（打印时需在浏览器打印对话框中勾选"背景图形"）</div>';
+      }
+      iframe.parentNode.insertBefore(placeholder, iframe.nextSibling);
+    });
+  }
+
+  if (window.matchMedia) {
+    var mediaQueryList = window.matchMedia('print');
+    var handler = function (mql) {
+      if (mql.matches) {
+        if (!document.querySelector('.iframe-print-inline')) {
+          inlineIframeForPrint();
+        }
+      }
+    };
+    if (mediaQueryList.addEventListener) {
+      mediaQueryList.addEventListener('change', handler);
+    } else if (mediaQueryList.addListener) {
+      mediaQueryList.addListener(handler);
+    }
+  }
+  window.addEventListener('beforeprint', function () {
+    if (!document.querySelector('.iframe-print-inline')) {
+      inlineIframeForPrint();
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
