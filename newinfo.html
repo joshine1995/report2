@@ -296,7 +296,7 @@
         }
 
         .collapse-wrapper.expanded .collapse-body {
-            max-height: 200px;
+            max-height: 320px;
         }
 
         /* 只读行样式（营业部信息） */
@@ -604,15 +604,15 @@
 
         <div class="list-row" onclick="openSelector('contactAddressType')">
             <label class="list-label">联系地址</label>
-            <div class="list-value filled" id="val-contactAddressType">与证件地址不一致</div>
+            <div class="list-value filled" id="val-contactAddressType">与证件地址一致</div>
             <div class="list-arrow">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
             </div>
             <select class="hidden-select" id="sel-contactAddressType" onchange="setValue('contactAddressType', this)">
-                <option value="与证件地址一致">与证件地址一致</option>
-                <option value="与证件地址不一致" selected>与证件地址不一致</option>
+                <option value="与证件地址一致" selected>与证件地址一致</option>
+                <option value="与证件地址不一致">与证件地址不一致</option>
             </select>
         </div>
 
@@ -635,31 +635,6 @@
                 <option value="江苏省-南京市">江苏省-南京市</option>
                 <option value="江苏省-苏州市">江苏省-苏州市</option>
             </select>
-        </div>
-
-        <!-- 折叠：选填信息 -->
-        <div class="collapse-wrapper" id="optionalCollapse">
-            <div class="list-row collapse-header-row" onclick="toggleCollapse()">
-                <label class="list-label">
-                    选填信息
-                    <span class="optional-badge">选填</span>
-                </label>
-                <div class="collapse-arrow" id="collapseArrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-            </div>
-            <div class="collapse-body" id="collapseBody">
-                <div class="collapse-row">
-                    <label class="list-label">工作单位</label>
-                    <input type="text" class="inline-input" id="workUnit" placeholder="请输入">
-                </div>
-                <div class="collapse-row">
-                    <label class="list-label">邮编</label>
-                    <input type="text" class="inline-input" id="zipCode" placeholder="请输入" maxlength="6">
-                </div>
-            </div>
         </div>
 
     </div>
@@ -703,11 +678,34 @@
 
     </div>
 
-    <!-- 营业部信息 -->
+    <!-- 折叠：选填信息（含营业部信息） -->
     <div class="list-group spaced">
-        <div class="list-row readonly-row">
-            <label class="list-label">营业部信息</label>
-            <div class="list-value filled" style="padding-right:0;">杭州环城北路证券营业部</div>
+        <div class="collapse-wrapper expanded" id="optionalCollapse">
+            <div class="list-row collapse-header-row" onclick="toggleCollapse()">
+                <label class="list-label">
+                    选填信息
+                    <span class="optional-badge">选填</span>
+                </label>
+                <div class="collapse-arrow" id="collapseArrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+            </div>
+            <div class="collapse-body" id="collapseBody">
+                <div class="collapse-row">
+                    <label class="list-label">工作单位</label>
+                    <input type="text" class="inline-input" id="workUnit" placeholder="请输入">
+                </div>
+                <div class="collapse-row">
+                    <label class="list-label">邮编</label>
+                    <input type="text" class="inline-input" id="zipCode" placeholder="请输入" maxlength="6">
+                </div>
+                <div class="list-row readonly-row" style="border-top:0.5px solid #EFEFEF;">
+                    <label class="list-label">营业部信息</label>
+                    <div class="list-value filled" style="padding-right:0;">杭州环城北路证券营业部</div>
+                </div>
+            </div>
         </div>
     </div>
 
