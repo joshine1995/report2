@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -896,115 +896,220 @@
     flex-shrink: 0;
   }
 
-  /* ───────────── 打印优化 ───────────── */
+  /* ═══════════════ 打印优化（PDF 输出） ═══════════════ */
   @page {
     size: A4;
-    margin: 12mm 10mm;
+    margin: 15mm 12mm 15mm 12mm;
   }
+
   @media print {
     html, body {
       background: #fff !important;
-      font-size: 11pt;
+      font-size: 12pt;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
-      color-adjust: exact !important;
     }
     .container {
       max-width: 100% !important;
+      width: 100% !important;
       padding: 0 !important;
       margin: 0 !important;
     }
 
-    /* 封面强制整色 */
     .report-cover {
       background: #1d4ed8 !important;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
-      break-after: page;
-      padding: 80px 40px !important;
+      break-after: page !important;
+      page-break-after: always !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: 100vh !important;
+      height: 100vh !important;
     }
+    .report-cover::before { display: none !important; }
+    .report-cover h1 {
+      font-size: 32pt !important;
+      letter-spacing: 6px !important;
+      margin: 0 0 40px 0 !important;
+    }
+    .cover-org { font-size: 16pt !important; margin-bottom: 36px !important; }
+    .cover-line { margin: 0 auto 32px !important; width: 60px !important; }
+    .cover-meta { font-size: 14pt !important; }
+    .cover-dept { font-size: 12pt !important; padding: 8px 24px !important; margin-top: 20px !important; }
 
-    /* 每个 section 独立成块，避免中部断裂 */
+    .toc {
+      break-after: page !important;
+      page-break-after: always !important;
+      box-shadow: none !important;
+      border: 1px solid #d1d5db !important;
+      padding: 28px 32px !important;
+      margin: 0 0 20px 0 !important;
+    }
+    .toc h2 { font-size: 18pt !important; }
+    .toc-item { font-size: 12pt !important; padding: 4px 0 !important; }
+    .toc-item.main { font-size: 13pt !important; margin-top: 6px !important; }
+
     .section {
       box-shadow: none !important;
+      border: 1px solid #d1d5db !important;
       break-inside: avoid;
       page-break-inside: avoid;
-      padding: 18px 22px !important;
-      margin-bottom: 14px !important;
+      padding: 20px 24px !important;
+      margin-bottom: 16px !important;
+      border-radius: 4px !important;
     }
+    .section-title {
+      font-size: 16pt !important;
+      padding-bottom: 10px !important;
+    }
+    .section-title .num {
+      width: 30px !important; height: 30px !important;
+      font-size: 14pt !important;
+    }
+    .section-desc { font-size: 11pt !important; }
+
     .subsection {
       break-inside: avoid;
       page-break-inside: avoid;
+      padding: 14px 18px !important;
+      margin-top: 16px !important;
     }
-    .ms-card,
-    .compare-card,
-    .embed-card,
-    .biz-card,
-    .flow-section,
-    .toc {
+    .subsection-title { font-size: 13pt !important; }
+    .field { font-size: 11pt !important; margin-bottom: 4px !important; }
+    .field-label { min-width: 70px !important; }
+
+    .ms-card, .compare-card, .embed-card, .biz-card, .kpi-card {
       break-inside: avoid;
       page-break-inside: avoid;
     }
+    .compare-card { border: 1px solid #d1d5db !important; }
+    .compare-card-header.old {
+      background: #fef3c7 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .compare-card-header.new {
+      background: #dbeafe !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .compare-card-img { max-height: 480px !important; }
 
-    /* 目录单独一页 */
-    .toc { break-after: page; page-break-after: always; }
+    .embed-card {
+      border: 1px solid #d1d5db !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .embed-card-header {
+      background: #d1fae5 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .embed-card-body { padding: 12px !important; }
+    .embed-iframe {
+      height: 700px !important;
+      border: 1px solid #ddd !important;
+      background: #fff !important;
+      border-radius: 4px !important;
+      box-shadow: none !important;
+    }
+    .iframe-print-inline {
+      display: block !important;
+      border: none !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      max-width: 100% !important;
+      background: #fff !important;
+    }
+    .iframe-print-inline * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
 
-    /* 甘特图：横向铺满，避免横向滚动被截断 */
+    .flow-section {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .flow-chart {
+      border: 1px solid #d1d5db !important;
+      overflow: visible !important;
+    }
+    .flow-section svg {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+
     .gantt-wrap {
       overflow: visible !important;
-      border: none !important;
+      border: 1px solid #d1d5db !important;
       box-shadow: none !important;
       break-inside: avoid;
       page-break-inside: avoid;
+      border-radius: 4px !important;
     }
     .gantt-table {
       min-width: 0 !important;
       width: 100% !important;
-      font-size: 8pt !important;
+      font-size: 7pt !important;
+      table-layout: fixed !important;
     }
     .gantt-table th, .gantt-table td {
-      padding: 4px 3px !important;
+      padding: 3px 2px !important;
+      border-color: #d1d5db !important;
     }
-    .gantt-table .th-name { min-width: 120px !important; }
-    .gantt-table .th-dept { min-width: 90px !important; }
-
-    /* iframe 原型：打印浏览器默认不渲染 iframe 内容，
-       用一个占位提示替代，避免大面积空白 */
-    .embed-iframe {
-      height: 600px !important;
-      border: 1px solid #ccc !important;
-      background: #fff !important;
+    .gantt-table thead th {
+      font-size: 7pt !important;
+      padding: 5px 2px !important;
+      background: #1e40af !important;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
-
-    /* SVG 流量图确保完整显示 */
-    .flow-section svg {
-      max-width: 100% !important;
-      height: auto !important;
-      break-inside: avoid;
-      page-break-inside: avoid;
+    .gantt-table .th-name { min-width: 100px !important; }
+    .gantt-table .th-dept { min-width: 70px !important; }
+    .gantt-table thead th:first-child { width: 24px !important; }
+    .gantt-table .bar {
+      font-size: 7pt !important;
+      padding: 3px 4px !important;
+      border-radius: 2px !important;
     }
-
-    /* 隐藏交互按钮等不需要打印的元素 */
-    .footer, .back-btn, .next-btn, .picker-mask, .picker-sheet, .toast {
-      display: none !important;
-    }
-
-    /* 图片避免被切断 */
-    img { max-width: 100% !important; break-inside: avoid; }
-
-    /* 表头深色背景强制打印 */
-    .gantt-table thead th,
-    .gantt-table .section-row td,
-    .gantt-table .track-legacy td,
-    .gantt-table .track-main td,
-    .gantt-table .track-sub td,
-    .gantt-table .track-operate td,
+    .gantt-table .bar-pending { font-size: 7pt !important; padding: 2px 6px !important; }
+    .gantt-table .bar-progress { font-size: 7pt !important; padding: 3px 4px !important; }
+    .gantt-table .section-row td { font-size: 9pt !important; padding: 7px 6px !important; }
+    .gantt-table .track-legacy td, .gantt-table .track-main td,
+    .gantt-table .track-sub td, .gantt-table .track-operate td,
     .gantt-table .track-parallel td {
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
+    .gantt-table .track-sub td { background: #e8f0fe !important; }
+
+    .kpi-grid { gap: 10px !important; }
+    .kpi-card { break-inside: avoid; padding: 10px 16px !important; }
+    .kpi-card .kpi-value { font-size: 20pt !important; }
+
+    .comm-grid { gap: 12px !important; }
+    .comm-card {
+      break-inside: avoid;
+      box-shadow: none !important;
+      border: 1px solid #d1d5db !important;
+    }
+    .comm-card .comm-title { font-size: 13pt !important; }
+    .comm-card .comm-detail { font-size: 11pt !important; }
+
+    img { max-width: 100% !important; break-inside: avoid; }
+    hr { border-color: #d1d5db !important; }
+    .info-list li { font-size: 11pt !important; }
+
+    .footer, .back-btn, .next-btn, .picker-mask, .picker-sheet, .toast {
+      display: none !important;
+    }
+    a { color: inherit !important; text-decoration: none !important; }
   }
 </style>
 </head>
@@ -1014,7 +1119,13 @@
 
   <!-- 报告封面 -->
   <div class="report-cover">
+    <div class="cover-org">国都证券股份有限公司</div>
     <h1>国都开户系统升级方案</h1>
+    <div class="cover-line"></div>
+    <div class="cover-meta">
+      <div>同花顺渠道开户系统对接与运营方案</div>
+    </div>
+    <div class="cover-dept">创新金融部 · 信息技术部 · 财富管理部</div>
   </div>
 
   <!-- 目录 -->
@@ -2001,3 +2112,4 @@
 
 </body>
 </html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿
