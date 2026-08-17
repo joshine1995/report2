@@ -565,25 +565,6 @@
             </select>
         </div>
 
-        <div class="list-row" onclick="openSelector('position')">
-            <label class="list-label">职务</label>
-            <div class="list-value" id="val-position">请选择</div>
-            <div class="list-arrow">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </div>
-            <select class="hidden-select" id="sel-position" onchange="setValue('position', this)">
-                <option value="" disabled selected>请选择</option>
-                <option value="高级管理人员">高级管理人员</option>
-                <option value="中级管理人员">中级管理人员</option>
-                <option value="基层管理人员">基层管理人员</option>
-                <option value="普通员工">普通员工</option>
-                <option value="负责人/法定代表人">负责人/法定代表人</option>
-                <option value="无">无</option>
-            </select>
-        </div>
-
         <div class="list-row" onclick="openSelector('income')">
             <label class="list-label">年均收入</label>
             <div class="list-value" id="val-income">请选择</div>
@@ -693,6 +674,24 @@
                 </div>
             </div>
             <div class="collapse-body" id="collapseBody">
+                <div class="list-row" onclick="openSelector('position')" style="border-bottom:0.5px solid #EFEFEF;">
+                    <label class="list-label">职务</label>
+                    <div class="list-value" id="val-position">请选择</div>
+                    <div class="list-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                    <select class="hidden-select" id="sel-position" onchange="setValue('position', this)">
+                        <option value="" disabled selected>请选择</option>
+                        <option value="高级管理人员">高级管理人员</option>
+                        <option value="中级管理人员">中级管理人员</option>
+                        <option value="基层管理人员">基层管理人员</option>
+                        <option value="普通员工">普通员工</option>
+                        <option value="负责人/法定代表人">负责人/法定代表人</option>
+                        <option value="无">无</option>
+                    </select>
+                </div>
                 <div class="collapse-row">
                     <label class="list-label">工作单位</label>
                     <input type="text" class="inline-input" id="workUnit" placeholder="请输入">
